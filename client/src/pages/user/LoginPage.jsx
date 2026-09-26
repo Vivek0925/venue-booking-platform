@@ -102,6 +102,7 @@ export default function LoginForm() {
     setResending(true);
     setError(null);
     setSuccessMessage(null);
+    setOtpDigits(["", "", "", "", "", ""]);
     try {
       const res = await requestOtp(email);
       setSuccessMessage(
