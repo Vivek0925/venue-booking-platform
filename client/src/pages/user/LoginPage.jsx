@@ -144,8 +144,8 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#FFFBF7] flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.06)] border border-orange-100/50 overflow-hidden grid grid-cols-1 md:grid-cols-2">
+    <div className="min-h-screen w-full bg-[#F8F7FF] flex items-center justify-center p-4">
+      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-[0_20px_50px_rgba(109,40,217,0.07)] border border-violet-100/50 overflow-hidden grid grid-cols-1 md:grid-cols-2">
         {/* Left Side: Form */}
         <div className="p-8 sm:p-12 flex flex-col justify-center">
           <h1 className="text-3xl font-extrabold text-stone-900 tracking-tight mb-2">
@@ -185,16 +185,16 @@ export default function LoginForm() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="hello@example.com"
+                  placeholder="hello@email.com"
                   disabled={submitting || step === "otp"}
                   required
-                  className="h-11 text-sm bg-stone-50/60 border-stone-200 focus-visible:ring-orange-400"
+                  className="h-11 text-sm bg-stone-50/60 border-stone-200 focus-visible:ring-violet-400"
                 />
                 {step === "email" ? (
                   <Button
                     type="submit"
                     disabled={submitting || !email}
-                    className="h-11 px-4 text-xs font-semibold bg-orange-100/80 text-orange-700 hover:bg-orange-200/90 shadow-none border border-orange-200/50 shrink-0"
+                    className="h-11 px-4 text-xs font-semibold bg-violet-100/80 text-violet-700 hover:bg-violet-200/90 shadow-none border border-violet-200/50 shrink-0"
                   >
                     {submitting ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -241,7 +241,7 @@ export default function LoginForm() {
                       onChange={(e) => handleOtpChange(index, e.target.value)}
                       onKeyDown={(e) => handleKeyDown(index, e)}
                       disabled={step !== "otp" || submitting}
-                      className="h-11 text-center text-base font-semibold bg-stone-50/60 border-stone-200 focus-visible:ring-orange-400 px-0"
+                      className="h-11 text-center text-base font-semibold bg-stone-50/60 border-stone-200 focus-visible:ring-violet-400 px-0"
                     />
                   ))}
                 </div>
@@ -252,7 +252,7 @@ export default function LoginForm() {
                     variant="outline"
                     onClick={handleResendOtp}
                     disabled={resending || submitting}
-                    className="h-11 px-3 text-xs font-medium text-orange-600 border-orange-200 hover:bg-orange-50 hover:text-orange-700 shrink-0"
+                    className="h-11 px-3 text-xs font-medium text-violet-600 border-violet-200 hover:bg-violet-50 hover:text-violet-700 shrink-0"
                   >
                     {resending ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -268,7 +268,7 @@ export default function LoginForm() {
             <Button
               type="submit"
               disabled={submitting || (step === "otp" && otp.length < 6)}
-              className="w-full h-11 bg-linear-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 text-white font-medium shadow-sm transition-all text-sm rounded-xl mt-2"
+              className="w-full h-11 bg-linear-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-medium shadow-sm shadow-violet-500/30 transition-all text-sm rounded-xl mt-2"
             >
               {submitting ? (
                 <Loader2 className="w-4 h-4 animate-spin mr-2" />
@@ -314,12 +314,12 @@ export default function LoginForm() {
         </div>
 
         {/* Right Side: Pastel Brand Panel */}
-        <div className="relative hidden md:flex flex-col items-center justify-center p-12 text-center bg-linear-to-br from-[#FFF5EC] via-[#F6F4FE] to-[#EEF5FF] overflow-hidden">
+        <div className="relative hidden md:flex flex-col items-center justify-center p-12 text-center bg-linear-to-br from-[#EEF0FF] via-[#F3F0FE] to-[#EEF5FF] overflow-hidden">
           <Sun className="absolute top-10 right-10 text-amber-300 w-6 h-6 stroke-1" />
           <Waves className="absolute left-10 top-1/2 -translate-y-1/2 text-cyan-400 w-6 h-6 stroke-1.5" />
           <PartyPopper className="absolute bottom-10 left-10 text-pink-400 w-6 h-6 stroke-1.5" />
 
-          <div className="w-14 h-14 rounded-full border-2 border-rose-300/80 bg-white/70 backdrop-blur-sm flex items-center justify-center shadow-sm mb-6 text-orange-500">
+          <div className="w-14 h-14 rounded-full border-2 border-violet-300/80 bg-white/70 backdrop-blur-sm flex items-center justify-center shadow-sm mb-6 text-violet-600">
             <Ticket className="w-6 h-6 rotate-[-15deg] stroke-[1.8]" />
           </div>
 
@@ -341,7 +341,7 @@ export default function LoginForm() {
             <div className="w-7 h-7 rounded-full bg-sky-200 border-2 border-white flex items-center justify-center text-[10px] font-bold text-sky-900">
               RV
             </div>
-            <div className="w-7 h-7 rounded-full bg-amber-400 border-2 border-white flex items-center justify-center text-[9px] font-bold text-white shadow-xs">
+            <div className="w-7 h-7 rounded-full bg-violet-500 border-2 border-white flex items-center justify-center text-[9px] font-bold text-white shadow-xs">
               +12k
             </div>
           </div>
