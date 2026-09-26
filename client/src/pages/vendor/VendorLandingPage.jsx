@@ -87,27 +87,27 @@ export default function VendorLandingPage() {
             />
             <span className="text-xl font-bold tracking-tight">Venuz</span>
           </div>
-          <Link to="/vendor/apply">
-            <Button variant="ghost" size="sm" className="font-medium">
-              Partner Login
-            </Button>
-          </Link>
         </header>
 
         {/* Hero */}
         <section className="relative px-6 pt-24 pb-20 max-w-4xl mx-auto text-center flex flex-col items-center">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-orange-500/10 rounded-full blur-3xl pointer-events-none -z-10" />
+          {/* Radial glow matching logo purple */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-violet-600/10 rounded-full blur-3xl pointer-events-none -z-10" />
+          <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-purple-500/[0.08] rounded-full blur-2xl pointer-events-none -z-10" />
 
           <Badge
             variant="secondary"
-            className="mb-6 px-3 py-1 text-xs gap-1.5 border-orange-200/60 bg-orange-50 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300"
+            className="mb-6 px-3 py-1 text-xs gap-1.5 border-violet-200/60 bg-violet-50 text-violet-700 dark:bg-violet-950/40 dark:text-violet-300"
           >
             <Sparkles className="w-3.5 h-3.5" /> For Venue Owners
           </Badge>
 
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-[1.15]">
-            Your venue. <span className="text-orange-500">Online</span> in
-            minutes.
+            Your venue.{" "}
+            <span className="bg-gradient-to-r from-violet-600 to-purple-500 bg-clip-text text-transparent">
+              Online
+            </span>{" "}
+            in minutes.
           </h1>
 
           <p className="text-muted-foreground text-lg sm:text-xl max-w-2xl mb-10 leading-relaxed">
@@ -119,12 +119,16 @@ export default function VendorLandingPage() {
             <Link to="/vendor/apply">
               <Button
                 size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-sm transition-all hover:-translate-y-px"
+                className="bg-violet-600 hover:bg-violet-700 text-white font-medium shadow-sm shadow-violet-500/30 transition-all hover:-translate-y-px hover:shadow-md hover:shadow-violet-500/40"
               >
                 Join as a Partner <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-            <Button size="lg" variant="outline">
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-violet-200 hover:border-violet-400 hover:text-violet-700 hover:bg-violet-50 dark:hover:bg-violet-950/30 dark:hover:text-violet-300 transition-colors"
+            >
               Learn More
             </Button>
           </div>
@@ -135,7 +139,7 @@ export default function VendorLandingPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x border-muted max-w-5xl mx-auto">
             {STATS.map(([value, label]) => (
               <div key={label} className="p-6 text-center">
-                <div className="text-3xl font-bold tracking-tight text-foreground">
+                <div className="text-3xl font-bold tracking-tight bg-gradient-to-r from-violet-600 to-purple-500 bg-clip-text text-transparent">
                   {value}
                 </div>
                 <div className="text-xs sm:text-sm text-muted-foreground mt-1 font-medium">
@@ -161,11 +165,14 @@ export default function VendorLandingPage() {
             {VENUE_TYPES.map(({ icon: Icon, name, desc }) => (
               <Card
                 key={name}
-                className="transition-all duration-200 hover:shadow-md hover:border-orange-200/80 group"
+                className="transition-all duration-200 hover:shadow-md hover:shadow-violet-500/10 hover:border-violet-300/80 dark:hover:border-violet-700/60 group"
               >
                 <CardContent className="p-6">
-                  <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center mb-4 transition-colors group-hover:bg-orange-500/20">
-                    <Icon className="text-orange-600" size={20} />
+                  <div className="w-10 h-10 rounded-lg bg-violet-500/10 flex items-center justify-center mb-4 transition-colors group-hover:bg-violet-500/20">
+                    <Icon
+                      className="text-violet-600 dark:text-violet-400"
+                      size={20}
+                    />
                   </div>
                   <h3 className="font-semibold text-base mb-1">{name}</h3>
                   <p className="text-sm text-muted-foreground leading-snug">
@@ -192,7 +199,7 @@ export default function VendorLandingPage() {
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
               {STEPS.map(({ n, title, desc }) => (
                 <div key={n} className="flex flex-col">
-                  <span className="text-4xl font-extrabold text-orange-500/20 mb-3 font-mono">
+                  <span className="text-4xl font-extrabold text-violet-500/25 mb-3 font-mono">
                     {n}
                   </span>
                   <h3 className="font-semibold text-base mb-1.5">{title}</h3>
@@ -217,7 +224,7 @@ export default function VendorLandingPage() {
           <Link to="/vendor/apply">
             <Button
               size="lg"
-              className="bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-sm transition-all hover:-translate-y-px"
+              className="bg-violet-600 hover:bg-violet-700 text-white font-medium shadow-sm shadow-violet-500/30 transition-all hover:-translate-y-px hover:shadow-md hover:shadow-violet-500/40"
             >
               Get Started — It's Free <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
@@ -236,13 +243,22 @@ export default function VendorLandingPage() {
               <span>© 2026 Venuz · Discover and book local experiences</span>
             </div>
             <div className="flex gap-6 text-xs sm:text-sm">
-              <a href="#" className="hover:text-foreground transition-colors">
+              <a
+                href="#"
+                className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+              >
                 Privacy
               </a>
-              <a href="#" className="hover:text-foreground transition-colors">
+              <a
+                href="#"
+                className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+              >
                 Terms
               </a>
-              <a href="#" className="hover:text-foreground transition-colors">
+              <a
+                href="#"
+                className="hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+              >
                 Support
               </a>
             </div>
