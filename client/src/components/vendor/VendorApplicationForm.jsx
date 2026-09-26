@@ -158,34 +158,34 @@ export default function VendorApplicationForm() {
     `w-full rounded-xl border px-3.5 py-2.5 text-xs text-stone-800 placeholder:text-stone-400 bg-stone-50/50 outline-none transition-all duration-150 ${
       err
         ? "border-red-400 bg-red-50/50 focus:border-red-500 focus:ring-2 focus:ring-red-100"
-        : "border-stone-200 hover:border-stone-300 focus:border-amber-400 focus:bg-white focus:ring-2 focus:ring-amber-100"
+        : "border-stone-200 hover:border-stone-300 focus:border-violet-400 focus:bg-white focus:ring-2 focus:ring-violet-100"
     }`;
 
   return (
-    <div className="fixed inset-0 bg-[#FFFBF7] flex overflow-hidden">
-      <div className="hidden lg:flex flex-col justify-between w-180 shrink-0 bg-linear-to-b from-[#fff2db] to-[#ffe8c4] text-[#2b241a] p-10 relative overflow-hidden border-r border-[#ecd8ba]">
+    <div className="fixed inset-0 bg-[#F8F7FF] flex overflow-hidden">
+      <div className="hidden lg:flex flex-col justify-between w-180 shrink-0 bg-linear-to-b from-[#3d1a8e] to-[#5b21b6] text-white p-10 relative overflow-hidden border-r border-violet-800/40">
         <div
           className="absolute inset-0 opacity-30"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 20px 20px, rgba(255,175,82,.22) 1px, transparent 0)",
+              "radial-gradient(circle at 20px 20px, rgba(167,139,250,.35) 1px, transparent 0)",
             backgroundSize: "40px 40px",
           }}
         />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#ffaf52] rounded-full opacity-25 translate-x-20 translate-y-20" />
-        <div className="absolute top-0 left-0 w-40 h-40 bg-[#ff8f3a] rounded-full opacity-20 -translate-x-10 -translate-y-10" />
+        <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-400 rounded-full opacity-20 translate-x-20 translate-y-20" />
+        <div className="absolute top-0 left-0 w-40 h-40 bg-violet-300 rounded-full opacity-15 -translate-x-10 -translate-y-10" />
 
         <div className="relative z-10">
           <img src="/logo.svg" alt="Venuez logo" className="mb-8 h-10 w-auto" />
-          <span className="inline-flex rounded-full border border-[#f0c992] bg-[#fff7e8] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#6a5435]">
+          <span className="inline-flex rounded-full border border-violet-300/40 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-violet-200">
             Partner onboarding
           </span>
-          <h1 className="mt-4 text-4xl font-black uppercase italic leading-tight tracking-tight text-[#2b241a]">
+          <h1 className="mt-4 text-4xl font-black uppercase italic leading-tight tracking-tight text-white">
             Partner
             <br />
             with Us
           </h1>
-          <p className="text-sm text-[#7b6d59] mt-3 leading-relaxed max-w-sm">
+          <p className="text-sm text-violet-200 mt-3 leading-relaxed max-w-sm">
             Join our growing network of verified venues and unlock a new stream
             of customers.
           </p>
@@ -207,29 +207,29 @@ export default function VendorApplicationForm() {
           ].map((step) => (
             <div
               key={step.num}
-              className="flex items-start gap-4 rounded-xl border border-[#f0dcc0] bg-white/60 px-3 py-2"
+              className="flex items-start gap-4 rounded-xl border border-violet-400/30 bg-white/10 px-3 py-2"
             >
-              <span className="text-[#ff8f3a] font-black text-xs mt-0.5 shrink-0">
+              <span className="text-violet-300 font-black text-xs mt-0.5 shrink-0">
                 {step.num}
               </span>
               <div>
-                <p className="text-xs font-bold text-[#2b241a]">{step.title}</p>
-                <p className="text-[11px] text-[#7b6d59]">{step.desc}</p>
+                <p className="text-xs font-bold text-white">{step.title}</p>
+                <p className="text-[11px] text-violet-200">{step.desc}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <p className="relative z-10 text-[10px] text-[#8b7a62] uppercase tracking-widest">
+        <p className="relative z-10 text-[10px] text-violet-300/70 uppercase tracking-widest">
           © 2025 Venuz · Built for local venues
         </p>
       </div>
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-1 overflow-auto px-4 py-8 sm:px-10 lg:px-12 flex justify-center items-start">
-          <div className="w-full max-w-4xl rounded-3xl border border-stone-200/80 bg-white p-6 shadow-[0_20px_50px_rgba(0,0,0,0.04)] sm:p-9">
+          <div className="w-full max-w-4xl rounded-3xl border border-stone-200/80 bg-white p-6 shadow-[0_20px_50px_rgba(109,40,217,0.06)] sm:p-9">
             <header className="mb-6 border-b border-stone-100 pb-5">
-              <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-amber-800 bg-amber-100/70 border border-amber-200/60 px-3 py-1 rounded-full mb-3">
+              <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-violet-700 bg-violet-100/70 border border-violet-200/60 px-3 py-1 rounded-full mb-3">
                 Partner Onboarding
               </span>
               <h2 className="text-2xl font-black uppercase tracking-tight text-stone-900">
@@ -353,11 +353,11 @@ export default function VendorApplicationForm() {
                         fileError
                           ? "border-red-400 bg-red-50/50"
                           : isDragging
-                            ? "border-amber-500 bg-amber-50 scale-[1.01]"
-                            : "border-stone-300 bg-stone-50/70 hover:border-amber-400 hover:bg-amber-50/40"
+                            ? "border-violet-500 bg-violet-50 scale-[1.01]"
+                            : "border-stone-300 bg-stone-50/70 hover:border-violet-400 hover:bg-violet-50/40"
                       }`}
                     >
-                      <span className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-white border border-stone-200 text-amber-600 shadow-sm transition-transform group-hover:-translate-y-0.5">
+                      <span className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-white border border-stone-200 text-violet-600 shadow-sm transition-transform group-hover:-translate-y-0.5">
                         <UploadCloud className="h-5 w-5" />
                       </span>
                       <span className="text-sm font-bold text-stone-800">
@@ -365,7 +365,7 @@ export default function VendorApplicationForm() {
                       </span>
                       <span className="mt-1 text-xs text-stone-500">
                         or{" "}
-                        <span className="font-semibold text-amber-700">
+                        <span className="font-semibold text-violet-700">
                           browse files
                         </span>{" "}
                         from your device
@@ -375,17 +375,17 @@ export default function VendorApplicationForm() {
                       </span>
                     </div>
                   ) : (
-                    <div className="min-h-24 border border-amber-200 rounded-2xl bg-amber-50/50 px-4 py-3 flex items-center justify-between">
+                    <div className="min-h-24 border border-violet-200 rounded-2xl bg-violet-50/50 px-4 py-3 flex items-center justify-between">
                       <div className="flex items-center gap-3 truncate">
                         {filePreview ? (
                           <img
                             src={filePreview}
                             alt="PAN Preview"
-                            className="w-16 h-16 object-cover rounded-lg border border-amber-200 shrink-0"
+                            className="w-16 h-16 object-cover rounded-lg border border-violet-200 shrink-0"
                           />
                         ) : (
-                          <span className="flex h-16 w-16 items-center justify-center rounded-lg bg-white border border-amber-200 shrink-0">
-                            <FileText className="w-6 h-6 text-amber-600" />
+                          <span className="flex h-16 w-16 items-center justify-center rounded-lg bg-white border border-violet-200 shrink-0">
+                            <FileText className="w-6 h-6 text-violet-600" />
                           </span>
                         )}
                         <div className="min-w-0">
@@ -420,7 +420,7 @@ export default function VendorApplicationForm() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full h-11 bg-linear-to-r from-amber-400 to-orange-400 hover:from-amber-500 hover:to-orange-500 active:scale-[0.99] text-white font-semibold text-xs tracking-wide shadow-xs rounded-xl uppercase transition-all flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="w-full h-11 bg-linear-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 active:scale-[0.99] text-white font-semibold text-xs tracking-wide shadow-sm shadow-violet-500/30 rounded-xl uppercase transition-all flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {loading ? (
                       <>

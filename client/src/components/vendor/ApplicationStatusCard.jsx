@@ -35,9 +35,9 @@ export default function ApplicationStatusCard({ status, reason }) {
         badge: {
           label: "Under Review",
           className:
-            "bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20 hover:bg-amber-500/10",
+            "bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20 hover:bg-violet-500/10",
         },
-        iconWrapper: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+        iconWrapper: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
         icon: <Clock className="h-8 w-8 animate-pulse" />,
         title: "Application Under Review",
         description:
