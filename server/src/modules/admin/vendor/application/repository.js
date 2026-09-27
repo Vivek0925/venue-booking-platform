@@ -18,8 +18,8 @@ export async function fetchApplicationsCounts() {
   return toCamelCase(result.rows[0]);
 }
 
-export async function fetchApplicationsByStatus(client, status) {
-  const result = await client.query(
+export async function fetchApplicationsByStatus(status) {
+  const result = await pool.query(
     `SELECT 
         id,
         pan_name, 
@@ -84,8 +84,8 @@ export async function markUserAsVendor(client, id) {
   return result.rows[0]?.email ?? null;
 }
 
-export async function markVendorAsRejected(client, data) {
-  const result = await client.query(
+export async function markVendorAsRejected(data) {
+  const result = await pool.query(
     `WITH rejected_application AS (
        UPDATE vendor_applications
        SET status = 'rejected',

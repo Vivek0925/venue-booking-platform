@@ -14,24 +14,14 @@ export async function getApplicationsCounts() {
 }
 
 export async function getApplications(status) {
-  const applications = await repository.fetchApplicationsByStatus(pool, status);
+  const applications = await repository.fetchApplicationsByStatus(status);
 
   return Promise.all(
     applications.map(async (item) => {
+      const { panDocumentKey, ...application } = item;
       return {
-        id: item.id,
-        panName: item.panName,
-        phone: item.phone,
-        address: item.address,
-        district: item.district,
-        state: item.state,
-        pincode: item.pincode,
-        panNumber: item.panNumber,
-        panDocumentUrl: (await getPrivateUrl([item.panDocumentKey]))[0],
-        status: item.status,
-        submittedAt: item.submittedAt,
-        reviewedAt: item.reviewedAt,
-        rejectionReason: item.rejectionReason,
+        ...application,
+        panDocument: (await getPrivateUrl([item.panDocumentKey]))[0],
       };
     })
   );
@@ -68,7 +58,7 @@ async function handleApproved(reviewerId, applicationId) {
 }
 
 async function handleRejected(reviewerId, applicationId, rejectionReason) {
-  const application = await repository.markVendorAsRejected(pool, {
+  const application = await repository.markVendorAsRejected({
     applicationId,
     rejectionReason,
     reviewerId,
