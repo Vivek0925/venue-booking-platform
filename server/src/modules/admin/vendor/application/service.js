@@ -91,12 +91,3 @@ async function handleRejected(reviewerId, applicationId, rejectionReason) {
 
   return application;
 }
-
-export async function getVendorProfile(vendorId) {
-  const vendor = await repository.fetchVenodrProfile(pool, vendorId);
-
-  if (!vendor) {
-    throw new ApiError(APPLICATION_ERROR_CONFIG.VENDOR_NOT_FOUND);
-  }
-  return vendor;
-}

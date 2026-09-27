@@ -21,10 +21,4 @@ router.patch(
   controller.reviewApplication
 );
 
-router.get(
-  '/vendor/:vendorId',
-  validateSchema(schema.vendorId, 'params'),
-  controller.getVendorProfile
-);
-
 export default router;

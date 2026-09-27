@@ -16,15 +16,8 @@ export async function reviewApplication(req, res) {
     req.params.applicationId,
     req.body
   );
-  res
-    .status(201)
-    .json({
-      status: true,
-      message: 'Vendor application reviewed successfully',
-    });
-}
-
-export async function getVendorProfile(req, res) {
-  const data = await service.getVendorProfile(req.params.vendorId);
-  res.status(200).json({ status: true, data });
+  res.status(201).json({
+    status: true,
+    message: 'Vendor application reviewed successfully',
+  });
 }
