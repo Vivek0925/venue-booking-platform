@@ -9,6 +9,10 @@ import {
 import { APPLICATION_ERROR_CONFIG } from './error.config.js';
 import * as repository from './repository.js';
 
+export async function getApplicationsCounts() {
+  return repository.fetchApplicationsCounts();
+}
+
 export async function getApplications(status) {
   const applications = await repository.fetchApplications(status);
   return Promise.all(
@@ -129,8 +133,4 @@ export async function reviewApplication(reviewerId, applicationId, data) {
   }
 
   return result.venue;
-}
-
-export async function getApplicationsCounts() {
-  return repository.fetchApplicationsCounts();
 }

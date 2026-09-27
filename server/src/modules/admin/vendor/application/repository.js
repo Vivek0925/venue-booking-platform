@@ -11,12 +11,7 @@ export async function fetchApplicationsCounts() {
     FROM vendor_applications`
   );
 
-  return {
-    totalApplications: Number(result.rows[0].total_applications),
-    pending: Number(result.rows[0].pending),
-    approved: Number(result.rows[0].approved),
-    rejected: Number(result.rows[0].rejected),
-  };
+  return toCamelCase(result.rows[0]);
 }
 
 export async function fetchApplicationsByStatus(client, status) {

@@ -1,6 +1,19 @@
 import { pool } from '../../../../infrastructure/database/db.js';
 import toCamelCase from '../../../../utils/camelcase.conversion.js';
 
+export async function fetchApplicationsCounts() {
+  const result = await pool.query(`
+    SELECT
+      COUNT(DISTINCT venue_group_id) AS total_applications,
+      COUNT(*) FILTER (WHERE status = 'pending') AS pending,
+      COUNT(*) FILTER (WHERE status = 'approved') AS approved,
+      COUNT(*) FILTER (WHERE status = 'rejected') AS rejected
+    FROM venue_applications
+  `);
+
+  return toCamelCase(result.rows[0]);
+}
+
 export async function fetchApplications(status) {
   const result = await pool.query(
     `
@@ -123,24 +136,4 @@ export async function createVenue(client, data) {
     ]
   );
   return result.rows[0];
-}
-
-export async function fetchApplicationsCounts() {
-  const result = await pool.query(`
-    SELECT
-      COUNT(DISTINCT venue_group_id) AS total_applications,
-      COUNT(*) FILTER (WHERE status = 'pending') AS pending,
-      COUNT(*) FILTER (WHERE status = 'approved') AS approved,
-      COUNT(*) FILTER (WHERE status = 'rejected') AS rejected
-    FROM venue_applications
-  `);
-
-  const row = result.rows[0];
-
-  return {
-    totalApplications: Number(row.total_applications),
-    pending: Number(row.pending),
-    approved: Number(row.approved),
-    rejected: Number(row.rejected),
-  };
 }
