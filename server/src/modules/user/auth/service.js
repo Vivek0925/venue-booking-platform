@@ -17,8 +17,7 @@ export async function requestOtp(email) {
   await redisRepository.storeOtp(email, hashedOtp);
 
   try {
-    // await sendOtpEmail(email, otp);
-    console.log(otp);
+    await sendOtpEmail(email, otp);
   } catch (err) {
     await redisRepository.deleteOtp(email);
     await redisRepository.resetOtpRequestCoolDown(email);
