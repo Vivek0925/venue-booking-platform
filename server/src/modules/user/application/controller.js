@@ -9,7 +9,8 @@ export async function submitApplication(req, res) {
   const data = await service.submitApplication(req.user.id, req.body, req.file);
   res.status(201).json({
     success: true,
-    message: 'Application successfully submitted',
+    message:
+      'Vendor application submitted successfully. It is now pending review.',
     data,
   });
 }

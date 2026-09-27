@@ -1,11 +1,7 @@
 import express from 'express';
 
 import upload from '../../../../middleware/file.upload.js';
-import {
-  requireFile,
-  requireFiles,
-  validateFileType,
-} from '../../../../middleware/file.validation.js';
+import { validateFileType } from '../../../../middleware/file.validation.js';
 import validateSchema from '../../../../middleware/schema.validation.js';
 import * as controller from './controller.js';
 import * as schema from './schema.js';
@@ -30,7 +26,6 @@ router.patch(
   '/venues/:venueId/cover',
   upload(1, 0).single('coverImage'),
   validateSchema(schema.venueId, 'params'),
-  requireFile,
   validateFileType,
   controller.uploadCoverImage
 );

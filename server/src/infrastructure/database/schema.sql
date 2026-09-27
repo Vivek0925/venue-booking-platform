@@ -65,6 +65,9 @@ CREATE TABLE IF NOT EXISTS vendor_applications (
   ),
   CONSTRAINT pan_format_check CHECK (pan_number ~ '^[A-Z]{5}[0-9]{4}[A-Z]$')
 );
+CREATE UNIQUE INDEX unique_active_pan
+  ON vendor_applications (pan_number)
+  WHERE status IN ('pending', 'approved');
 
 CREATE TABLE IF NOT EXISTS vendor_profiles (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

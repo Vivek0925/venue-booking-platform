@@ -3,22 +3,11 @@ import { fileTypeFromBuffer } from 'file-type';
 import { ERROR_CONFIG } from '../config/error.config.js';
 import ApiError from '../utils/api.error.js';
 
-export function requireFile(req, res, next) {
-  if (!req.file) {
-    throw new ApiError(ERROR_CONFIG.FILE_REQUIRED);
-  }
-  next();
-}
-
-export function requireFiles(req, res, next) {
-  if (!req.files || req.files.length === 0) {
+export async function validateFileType(req, res, next) {
+  if (!req.file && !req.files) {
     throw new ApiError(ERROR_CONFIG.FILES_REQUIRED);
   }
 
-  next();
-}
-
-export async function validateFileType(req, res, next) {
   if (req.file) {
     await validateFileBuffer(req.file);
   }

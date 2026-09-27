@@ -18,9 +18,7 @@ export default function upload(files, fields) {
     },
     fileFilter: (req, file, cb) => {
       const extension = path.extname(file.originalname).toLowerCase();
-
       const validExtension = ALLOWED_EXTENSIONS.includes(extension);
-
       const validMimeType = ALLOWED_MIMETYPES.includes(file.mimetype);
 
       if (validExtension && validMimeType) {

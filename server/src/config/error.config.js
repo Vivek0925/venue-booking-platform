@@ -35,11 +35,6 @@ export const ERROR_CONFIG = {
     message: 'File is required',
     code: 'FILE_REQUIRED',
   },
-  FILES_REQUIRED: {
-    statusCode: 400,
-    message: 'Files are required',
-    code: 'FILES_REQUIRED',
-  },
   EMAIL_SEND_FAILED: {
     statusCode: 500,
     message: 'Failed to send OTP email',
