@@ -11,8 +11,8 @@ export async function findVenueGroupId(vendorId, venueGroupId) {
   return toCamelCase(result.rows[0]);
 }
 
-export async function insertIntoVenueApplications(client, data) {
-  const result = await client.query(
+export async function insertIntoVenueApplications(data) {
+  const result = await pool.query(
     `
       INSERT INTO venue_applications (
         vendor_id,

@@ -38,8 +38,7 @@ export async function submitApplication(vendorId, data, files) {
     let venueGroupId;
     if (data.venueGroupId) {
       const result = await findVenueGroupId(vendorId, data.venueGroupId);
-
-      if (!result || result.venueGroupId) {
+      if (!result || !result.venueGroupId) {
         throw new ApiError(ERROR_CONFIG.NO_EXISTING_VENUE_FOUND);
       }
       venueGroupId = result.venueGroupId;
@@ -56,9 +55,7 @@ export async function submitApplication(vendorId, data, files) {
       coverImageKey,
     });
   } catch (err) {
-    for (const key of uploadedKeys) {
-      await deleteFromR2(key);
-    }
+    await Promise.all(uploadedKeys.map((key) => deleteFromR2(key)));
     throw err;
   }
 }
