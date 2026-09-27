@@ -17,7 +17,8 @@ export async function requestOtp(email) {
   await redisRepository.storeOtp(email, hashedOtp);
 
   try {
-    await sendOtpEmail(email, otp);
+    // await sendOtpEmail(email, otp);
+    console.log(otp);
   } catch (err) {
     await redisRepository.deleteOtp(email);
     await redisRepository.resetOtpRequestCoolDown(email);
@@ -111,7 +112,16 @@ export async function rotateSession(refreshToken) {
       throw new ApiError(ERROR_CONFIG.SESSION_EXPIRED);
     }
 
-    return createSession(client, userId);
+    const user = await repository.findUserById(client, userId);
+
+    if (!user) {
+      throw new ApiError(USER_ERROR_CONFIG.USER_NOT_FOUND);
+    }
+    if (user.status === 'banned' || user.status === 'deleted') {
+      throw new ApiError(USER_ERROR_CONFIG.ACCOUNT_DEACTIVATED);
+    }
+
+    return createSession(client, user.id);
   });
 }
 

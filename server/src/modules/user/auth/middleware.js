@@ -40,7 +40,7 @@ export async function ensureAccountActive(req, res, next) {
     throw new ApiError(USER_ERROR_CONFIG.USER_NOT_FOUND);
   }
 
-  if (user.status === 'banned') {
+  if (user.status === 'banned' || user.status === 'deleted') {
     throw new ApiError(USER_ERROR_CONFIG.ACCOUNT_DEACTIVATED);
   }
 
