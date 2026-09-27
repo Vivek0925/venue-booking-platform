@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS users (
   role TEXT NOT NULL DEFAULT 'customer',
   status TEXT NOT NULL DEFAULT 'active',
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  CONSTRAINT users_status_check CHECK (status IN ('active', 'banned')),
+  CONSTRAINT users_status_check CHECK (status IN ('active', 'banned', 'deleted')),
   CONSTRAINT users_role_check CHECK (role IN ('customer', 'vendor'))
 );
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS refresh_tokens (
 
 CREATE TABLE IF NOT EXISTS vendor_applications (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  user_id UUID NOT NULL REFERENCES users (id),
   pan_name TEXT NOT NULL,
   phone TEXT NOT NULL,
   address TEXT NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS vendor_applications (
 
 CREATE TABLE IF NOT EXISTS vendor_profiles (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID UNIQUE NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  user_id UUID UNIQUE NOT NULL REFERENCES users (id),
   application_id UUID NOT NULL REFERENCES vendor_applications(id),
   vendor_name TEXT NOT NULL,
   is_suspended BOOLEAN NOT NULL DEFAULT FALSE,
@@ -98,7 +98,7 @@ CREATE EXTENSION postgis WITH SCHEMA extensions;
 
 CREATE TABLE IF NOT EXISTS venue_applications (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  vendor_id UUID NOT NULL REFERENCES vendor_profiles (id) ON DELETE CASCADE,
+  vendor_id UUID NOT NULL REFERENCES vendor_profiles (id),
   venue_group_id UUID not null DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   venue_details TEXT NOT NULL,
@@ -135,7 +135,7 @@ CREATE TYPE venue_status AS ENUM('live', 'suspended', 'draft');
 
 CREATE TABLE IF NOT EXISTS venues (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  vendor_id UUID NOT NULL REFERENCES vendor_profiles (id) ON DELETE CASCADE,
+  vendor_id UUID NOT NULL REFERENCES vendor_profiles (id),
   application_id UUID NOT NULL REFERENCES venue_applications (id),
   name TEXT NOT NULL,
   description TEXT,
