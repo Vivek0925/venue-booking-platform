@@ -116,7 +116,7 @@ function ApplicationGridCard({ app, onAction }) {
           </span>
         </div>
 
-        <h3 className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-slate-900 group-hover:text-indigo-600 transition-colors">
+        <h3 className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-slate-900 transition-colors">
           {name}
         </h3>
 

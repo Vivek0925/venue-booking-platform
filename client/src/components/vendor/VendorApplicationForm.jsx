@@ -176,7 +176,9 @@ export default function VendorApplicationForm() {
         <div className="absolute top-0 left-0 w-40 h-40 bg-violet-300 rounded-full opacity-15 -translate-x-10 -translate-y-10" />
 
         <div className="relative z-10">
-          <img src="/logo.svg" alt="Venuez logo" className="mb-8 h-10 w-auto" />
+          <div className="mb-8 inline-block rounded-lg bg-white px-2 py-2">
+            <img src="/logo.svg" alt="Venuez logo" className="h-10 w-auto" />
+          </div>
           <span className="inline-flex rounded-full border border-violet-300/40 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-violet-200">
             Partner onboarding
           </span>
