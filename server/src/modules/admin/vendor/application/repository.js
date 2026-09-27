@@ -66,7 +66,7 @@ export async function markVendorAsApproved(client, data) {
 
 export async function createVendorProfile(client, data) {
   await client.query(
-    `INSERT INTO vendor_profiles(id, user_id, vendor_name, phone, district, state)
+    `INSERT INTO vendor_profiles(application_id, user_id, vendor_name, phone, district, state)
       VALUES ($1, $2, $3, $4, $5, $6)`,
     [data.id, data.userId, data.panName, data.phone, data.district, data.state]
   );
@@ -87,7 +87,7 @@ export async function markUserAsVendor(client, id) {
 
 export async function markVendorAsRejected(client, data) {
   const result = await client.query(
-    `WITH rejected AS (
+    `WITH rejected_application AS (
        UPDATE vendor_applications
        SET status = 'rejected',
            rejection_reason = $1,
@@ -97,12 +97,12 @@ export async function markVendorAsRejected(client, data) {
          AND status = 'pending'
        RETURNING id, user_id, pan_name, rejection_reason
      )
-     SELECT rejected.id,
-            rejected.pan_name,
-            rejected.rejection_reason,
+     SELECT rejected_application.id,
+            rejected_application.pan_name,
+            rejected_application.rejection_reason,
             users.email
-     FROM rejected
-     JOIN users ON users.id = rejected.user_id`,
+     FROM rejected_application
+     JOIN users ON users.id = rejected_application.user_id`,
     [data.rejectionReason, data.reviewerId, data.applicationId]
   );
 

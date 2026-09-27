@@ -61,10 +61,9 @@ async function handleApproved(reviewerId, applicationId) {
     return { email, vendorName: application.panName };
   });
   try {
-    await sendVendorApprovalMail(emailInfo);
-    return;
+    return await sendVendorApprovalMail(emailInfo);
   } catch (error) {
-    throw new ApiError(APPLICATION_ERROR_CONFIG.EMAIL_SEND_FAILED);
+    console.error('Failed to send vendor approval email:', error);
   }
 }
 
@@ -86,8 +85,6 @@ async function handleRejected(reviewerId, applicationId, rejectionReason) {
       rejectionReason: application.rejectionReason,
     });
   } catch (error) {
-    throw new ApiError(APPLICATION_ERROR_CONFIG.EMAIL_SEND_FAILED);
+    console.error('Failed to send vendor rejection email:', error);
   }
-
-  return application;
 }
