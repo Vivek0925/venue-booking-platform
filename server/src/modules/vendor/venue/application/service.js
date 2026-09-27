@@ -12,10 +12,10 @@ export async function submitApplication(vendorId, data, files) {
   const proofDocument = files.proofDocument[0];
   const coverImage = files.coverImage[0];
 
-  const proofDocumentKey = `venue-applications/${vendorId}/${Date.now()}-venueProof${path.extname(proofDocument.originalname)}`;
-  const coverImageKey = `venue-applications/${vendorId}/${Date.now()}-venueCoverImage${path.extname(coverImage.originalname)}`;
+  const proofDocumentKey = `venue-applications/${vendorId}/${Date.now()}/venueProof${path.extname(proofDocument.originalname)}`;
+  const coverImageKey = `venue-applications/${vendorId}/${Date.now()}/venueCoverImage${path.extname(coverImage.originalname)}`;
   const venueImagesKeys = files.venueImages.map((image, index) => {
-    return `venue-applications/${vendorId}/${Date.now()}-venueImage${index}${path.extname(image.originalname)}`;
+    return `venue-applications/${vendorId}/${Date.now()}/venueImage${index}${path.extname(image.originalname)}`;
   });
 
   const uploads = [
