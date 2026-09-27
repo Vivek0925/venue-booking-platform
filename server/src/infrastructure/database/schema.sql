@@ -102,7 +102,7 @@ CREATE EXTENSION postgis WITH SCHEMA extensions;
 CREATE TABLE IF NOT EXISTS venue_applications (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   vendor_id UUID NOT NULL REFERENCES vendor_profiles (id),
-  venue_group_id UUID not null DEFAULT gen_random_uuid(),
+  venue_application_group_id UUID not null DEFAULT gen_random_uuid(),
   name TEXT NOT NULL,
   venue_details TEXT NOT NULL,
   category venue_category NOT NULL,

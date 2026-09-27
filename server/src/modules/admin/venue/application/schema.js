@@ -19,8 +19,7 @@ export const status = z.object({
     .string()
     .trim()
     .toLowerCase()
-    .pipe(z.enum(['pending', 'approved', 'rejected']))
-    .optional(),
+    .pipe(z.enum(['pending', 'approved', 'rejected'])),
 });
 
 export const applicationId = z.object({

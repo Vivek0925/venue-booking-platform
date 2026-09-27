@@ -15,7 +15,7 @@ export async function fetchVenuesApplicationStatus(vendorId) {
     `
   SELECT id, name, category, district, state, status, cover_image_key, submitted_at
 FROM (
-    SELECT DISTINCT ON (venue_group_id)
+    SELECT DISTINCT ON (venue_application_group_id)
         id,
         name,
         category,
@@ -26,7 +26,7 @@ FROM (
         submitted_at
     FROM venue_applications
     WHERE vendor_id = $1
-    ORDER BY venue_group_id, submitted_at DESC
+    ORDER BY venue_application_group_id, submitted_at DESC
 ) latest
 WHERE status IN ('pending', 'rejected');`,
     [vendorId]
@@ -39,14 +39,14 @@ export async function fetchVenueApplication(vendorId, applicationId) {
     `
     SELECT *
     FROM (
-      SELECT DISTINCT ON (venue_group_id)
-        id, venue_group_id, name, venue_details, category, address, district, state, pincode,
+      SELECT DISTINCT ON (venue_application_group_id)
+        id, venue_application_group_id, name, venue_details, category, address, district, state, pincode,
         ST_Y(geo_loc::geometry) AS latitude,
         ST_X(geo_loc::geometry) AS longitude,
         images, status, cover_image_key, proof_document_key, rejection_reason, submitted_at
       FROM venue_applications
       WHERE vendor_id = $1 AND id = $2 
-      ORDER BY venue_group_id, submitted_at DESC
+      ORDER BY venue_application_group_id, submitted_at DESC
     ) AS latest_per_group
     WHERE status IN ('pending', 'rejected')
     `,

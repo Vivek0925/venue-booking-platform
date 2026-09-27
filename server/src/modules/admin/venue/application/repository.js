@@ -4,11 +4,17 @@ import toCamelCase from '../../../../utils/camelcase.conversion.js';
 export async function fetchApplicationsCounts() {
   const result = await pool.query(`
     SELECT
-      COUNT(DISTINCT venue_group_id) AS total_applications,
-      COUNT(*) FILTER (WHERE status = 'pending') AS pending,
-      COUNT(*) FILTER (WHERE status = 'approved') AS approved,
-      COUNT(*) FILTER (WHERE status = 'rejected') AS rejected
+    COUNT(*) AS total_applications,
+    COUNT(*) FILTER (WHERE status = 'pending') AS pending,
+    COUNT(*) FILTER (WHERE status = 'approved') AS approved,
+    COUNT(*) FILTER (WHERE status = 'rejected') AS rejected
+FROM (
+    SELECT DISTINCT ON (venue_application_group_id)
+        venue_application_group_id,
+        status
     FROM venue_applications
+    ORDER BY venue_application_group_id, submitted_at DESC
+) AS latest_application_count_per_group
   `);
 
   return toCamelCase(result.rows[0]);
@@ -17,22 +23,18 @@ export async function fetchApplicationsCounts() {
 export async function fetchApplications(status) {
   const result = await pool.query(
     `
-  SELECT * FROM (
-  SELECT DISTINCT ON (va.venue_group_id)
-    va.id, va.venue_group_id, va.name, va.category,
-    va.district, va.state, va.status, va.cover_image_key, va.submitted_at, va.reviewed_at, va.rejection_reason,
-    vp.id AS vendor_id, vp.vendor_name,
-    a.id AS reviewer_id, a.email AS reviewer_email
-  FROM venue_applications va
-  JOIN vendor_profiles vp ON vp.id = va.vendor_id
-  LEFT JOIN admins a ON a.id = va.reviewed_by
-  ORDER BY va.venue_group_id, va.submitted_at DESC
-  ) AS latest_per_group
-  WHERE status = $1
-  ORDER BY submitted_at ASC`,
+SELECT * FROM (
+SELECT DISTINCT ON (venue_application_group_id)
+    id, name, category, district, state, status, cover_image_key, submitted_at
+  FROM venue_applications
+  ORDER BY venue_application_group_id, submitted_at DESC   
+) AS latest_per_group
+WHERE status = $1                               
+ORDER BY submitted_at ASC
+`,
     [status]
   );
-  return result.rows;
+  return result.rows.map((row) => toCamelCase(row));
 }
 
 export async function fetchApplication(applicationId) {

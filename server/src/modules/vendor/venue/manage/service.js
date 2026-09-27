@@ -1,3 +1,5 @@
+import { randomUUID } from 'crypto';
+
 import { pool } from '../../../../infrastructure/database/db.js';
 import ApiError from '../../../../utils/api.error.js';
 import {
@@ -54,7 +56,7 @@ export async function getVenuesApplication(vendorId, applicationId) {
 
   return {
     id: venue.id,
-    venueGroupId: venue.venue_group_id,
+    venueGroupId: venue.venue_application_group_id,
     name: venue.name,
     venueDetails: venue.venue_details,
     category: venue.category,

@@ -4,8 +4,8 @@ import toCamelCase from '../../../../utils/camelcase.conversion.js';
 export async function findVenueGroupId(vendorId, venueGroupId) {
   const result = await pool.query(
     `
-  SELECT venue_group_id FROM venue_applications
-  WHERE vendor_id = $1 AND venue_group_id = $2 AND status = 'rejected'`,
+  SELECT venue_application_group_id FROM venue_applications
+  WHERE vendor_id = $1 AND venue_application_group_id = $2 AND status = 'rejected'`,
     [vendorId, venueGroupId]
   );
   return toCamelCase(result.rows[0]);
@@ -16,7 +16,7 @@ export async function insertIntoVenueApplications(data) {
     `
       INSERT INTO venue_applications (
         vendor_id,
-        venue_group_id,
+        venue_application_group_id,
         name,
         venue_details,
         category,

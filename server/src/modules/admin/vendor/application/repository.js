@@ -4,11 +4,15 @@ import toCamelCase from '../../../../utils/camelcase.conversion.js';
 export async function fetchApplicationsCounts() {
   const result = await pool.query(
     `SELECT 
-    COUNT (DISTINCT id) AS total_applications,
+    COUNT (*) AS total_applications,
     COUNT(*)  FILTER (WHERE status = 'pending') AS pending,
     COUNT(*) FILTER (WHERE status = 'approved') AS approved,
-    COUNT(*) FILTER (WHERE status = 'rejected') AS rejected
-    FROM vendor_applications`
+    COUNT(*) FILTER (WHERE status = 'rejected') AS rejected 
+    FROM (
+    SELECT DISTINCT ON (user_id)
+    user_id, status
+    FROM vendor_applications 
+    ORDER BY user_id, submitted_at DESC) AS latest_application_count_per_user`
   );
 
   return toCamelCase(result.rows[0]);
