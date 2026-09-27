@@ -1,6 +1,7 @@
 import express from 'express';
 
 import upload from '../../../../middleware/file.upload.js';
+import { validateFileType } from '../../../../middleware/file.validation.js';
 import validateSchema from '../../../../middleware/schema.validation.js';
 import * as controller from './controller.js';
 import validateFileCount from './middleware.js';
@@ -15,8 +16,9 @@ router.post(
     { name: 'proofDocument', maxCount: 1 },
     { name: 'coverImage', maxCount: 1 },
   ]),
-  validateSchema(schema),
+  validateFileType,
   validateFileCount,
+  validateSchema(schema),
   controller.submitApplication
 );
 

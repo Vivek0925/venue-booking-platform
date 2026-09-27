@@ -12,59 +12,53 @@ export async function submitApplication(vendorId, data, files) {
   const proofDocument = files.proofDocument[0];
   const coverImage = files.coverImage[0];
 
-  const proofDocumentKey = `venue-application/${vendorId}/${Date.now()}-venueProof${path.extname(proofDocument.originalname)}`;
-  const coverImageKey = `venue-application/${vendorId}/${Date.now()}-venueCoverImage${path.extname(coverImage.originalname)}`;
+  const proofDocumentKey = `venue-applications/${vendorId}/${Date.now()}-venueProof${path.extname(proofDocument.originalname)}`;
+  const coverImageKey = `venue-applications/${vendorId}/${Date.now()}-venueCoverImage${path.extname(coverImage.originalname)}`;
   const venueImagesKeys = files.venueImages.map((image, index) => {
-    return `venue-application/${vendorId}/${Date.now()}-${index}-venueImages${path.extname(image.originalname)}`;
+    return `venue-applications/${vendorId}/${Date.now()}-venueImage${index}${path.extname(image.originalname)}`;
   });
 
-  const uploadedKeys = [];
+  const uploads = [
+    { key: proofDocumentKey, file: proofDocument },
+    { key: coverImageKey, file: coverImage },
+    ...files.venueImages.map((image, index) => ({
+      key: venueImagesKeys[index],
+      file: image,
+    })),
+  ];
+  const uploadedKeys = uploads.map((u) => u.key);
 
   try {
-    await uploadToR2(
-      proofDocument.buffer,
-      proofDocumentKey,
-      proofDocument.mimetype
+    await Promise.all(
+      uploads.map(({ key, file }) =>
+        uploadToR2(file.buffer, key, file.mimetype)
+      )
     );
-    uploadedKeys.push(proofDocumentKey);
-
-    await uploadToR2(coverImage.buffer, coverImageKey, coverImage.mimetype);
-    uploadedKeys.push(coverImageKey);
-
-    for (const [index, image] of files.venueImages.entries()) {
-      await uploadToR2(image.buffer, venueImagesKeys[index], image.mimetype);
-      uploadedKeys.push(venueImagesKey[index]);
-    }
 
     let venueGroupId;
-
     if (data.venueGroupId) {
       const result = await findVenueGroupId(vendorId, data.venueGroupId);
 
-      if (!result) {
+      if (!result || result.venueGroupId) {
         throw new ApiError(ERROR_CONFIG.NO_EXISTING_VENUE_FOUND);
       }
-
       venueGroupId = result.venueGroupId;
     } else {
       venueGroupId = randomUUID();
     }
 
-    return await withTransaction(pool, async (client) => {
-      return await insertIntoVenueApplications(client, {
-        ...data,
-        vendorId,
-        venueGroupId,
-        images: venueImagesKey,
-        proofDocumentKey,
-        coverImageKey,
-      });
+    return insertIntoVenueApplications({
+      ...data,
+      vendorId,
+      venueGroupId,
+      images: venueImagesKeys,
+      proofDocumentKey,
+      coverImageKey,
     });
   } catch (err) {
     for (const key of uploadedKeys) {
       await deleteFromR2(key);
     }
-
     throw err;
   }
 }

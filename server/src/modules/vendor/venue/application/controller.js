@@ -8,7 +8,7 @@ export async function submitApplication(req, res) {
   );
   return res.status(201).json({
     success: true,
-    message: 'Venue application submitted',
+    message: 'Venue application submitted successfully',
     data: data,
   });
 }

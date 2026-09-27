@@ -21,7 +21,8 @@ const schema = z.object({
   venueDetails: z.string().trim().min(10, 'Venue details is required'),
 
   category: z.enum(ALLOWED_CATEGORY, {
-    message: 'Allowed category are waterpark, amusement_park or playzone',
+    message:
+      'Allowed category are waterpark, amusement_park, racing_zone, gaming_zone or playzone',
   }),
 
   address: z.string().trim().min(5, 'Full address is required'),
@@ -41,6 +42,7 @@ const schema = z.object({
   latitude: z.coerce.number().min(-90).max(90, 'Invalid latitude'),
 
   longitude: z.coerce.number().min(-180).max(180, 'Invalid longitude'),
+
   venueGroupId: z
     .string()
     .trim()

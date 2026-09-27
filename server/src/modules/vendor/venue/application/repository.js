@@ -64,5 +64,5 @@ export async function insertIntoVenueApplications(client, data) {
     ]
   );
 
-  return result.rows[0];
+  return toCamelCase(result.rows[0]);
 }
