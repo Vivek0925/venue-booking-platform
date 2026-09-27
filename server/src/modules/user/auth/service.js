@@ -102,16 +102,16 @@ export async function rotateSession(refreshToken) {
   const hashedRefreshToken = token.generateTokenHash(refreshToken);
 
   return await withTransaction(pool, async (client) => {
-    const { userId } = await repository.markRefreshTokenAsRevoked(
+    const revoked = await repository.markRefreshTokenAsRevoked(
       client,
       hashedRefreshToken
     );
 
-    if (!userId) {
+    if (!revoked) {
       throw new ApiError(ERROR_CONFIG.SESSION_EXPIRED);
     }
 
-    const user = await repository.findUserById(client, userId);
+    const user = await repository.findUserById(client, revoked.userId);
 
     if (!user) {
       throw new ApiError(USER_ERROR_CONFIG.USER_NOT_FOUND);
