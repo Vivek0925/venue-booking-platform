@@ -9,12 +9,17 @@ import schema from './schema.js';
 
 const router = express.Router();
 
-router.use(authenticateToken, ensureAccountActive);
-
-router.get('/application/status', controller.getApplicationStatus);
+router.get(
+  '/application/status',
+  authenticateToken,
+  ensureAccountActive,
+  controller.getApplicationStatus
+);
 
 router.post(
   '/application',
+  authenticateToken,
+  ensureAccountActive,
   upload(1, 7).single('panDocument'),
   validateFileType,
   validateSchema(schema),
