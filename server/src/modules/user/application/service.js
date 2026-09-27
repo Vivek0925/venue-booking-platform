@@ -8,17 +8,20 @@ import { USER_ERROR_CONFIG } from '../error.config.js';
 import * as repository from './repository.js';
 
 export async function getApplicationStatus(userId) {
-  const application = await repository.fetchLatestApplicationStatus(userId);
+  const application = await repository.fetchLatestApplication(userId);
 
   if (!application) {
-    return { applicationStatus: 'not_applied' };
+    return { applicationStatus: 'not_applied', application: null };
   }
 
-  return application;
+  return {
+    applicationStatus: application.status,
+    application,
+  };
 }
 
 export async function submitApplication(userId, data, file) {
-  const application = await repository.fetchLatestApplicationStatus(userId);
+  const application = await repository.fetchLatestApplication(userId);
 
   if (application && application.status !== 'rejected') {
     throw new ApiError(USER_ERROR_CONFIG.APPLICATION_ALREADY_EXISTS);
@@ -30,19 +33,14 @@ export async function submitApplication(userId, data, file) {
   try {
     await uploadToR2(file.buffer, documentKey, file.mimetype);
     upload = true;
-    return await withTransaction(pool, async (client) => {
-      return await repository.insertVendorApplication(client, {
-        userId,
-        ...data,
-        documentKey,
-      });
+    return await repository.insertVendorApplication({
+      userId,
+      ...data,
+      documentKey,
     });
   } catch (err) {
     if (upload) {
       await deleteFromR2(documentKey);
-    }
-    if (err.code === '23505') {
-      throw new ApiError(USER_ERROR_CONFIG.APPLICATION_ALREADY_EXISTS);
     }
     throw err;
   }

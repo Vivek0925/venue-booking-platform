@@ -38,7 +38,7 @@ export default function ApplicationStatusCard({ status, reason }) {
             "bg-violet-500/10 text-violet-600 dark:text-violet-400 border-violet-500/20 hover:bg-violet-500/10",
         },
         iconWrapper: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
-        icon: <Clock className="h-8 w-8 animate-pulse" />,
+        icon: <Clock className="h-10 w-10 animate-pulse" />,
         title: "Application Under Review",
         description:
           "Thank you for your interest in becoming a vendor. Our compliance team is actively reviewing your submission.",
@@ -53,7 +53,7 @@ export default function ApplicationStatusCard({ status, reason }) {
           },
           iconWrapper:
             "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-          icon: <CheckCircle className="h-8 w-8" />,
+          icon: <CheckCircle className="h-10 w-10" />,
           title: "Application Approved",
           description:
             "Your vendor application has been approved. You can now start setting up your venues and accepting bookings.",
@@ -65,16 +65,16 @@ export default function ApplicationStatusCard({ status, reason }) {
               "bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/10",
           },
           iconWrapper: "bg-destructive/10 text-destructive",
-          icon: <XCircle className="h-8 w-8" />,
+          icon: <XCircle className="h-10 w-10" />,
           title: "Application Declined",
           description:
             "We're unable to approve your vendor application at this time. Please review the details below before submitting a new request.",
         };
 
   return (
-    <div className="flex min-h-[60vh] items-center justify-center p-4">
-      <Card className="w-full max-w-lg shadow-sm">
-        <CardHeader className="flex flex-col items-center text-center pb-4">
+    <div className="flex min-h-screen items-center justify-center p-4">
+      <Card className="w-full max-w-2xl shadow-xl md:p-6">
+        <CardHeader className="flex flex-col items-center text-center pb-8">
           <div className="flex w-full justify-center mb-4">
             <Badge variant="outline" className={config.badge.className}>
               {config.badge.label}
@@ -82,15 +82,15 @@ export default function ApplicationStatusCard({ status, reason }) {
           </div>
 
           <div
-            className={`flex h-16 w-16 items-center justify-center rounded-full mb-3 ${config.iconWrapper}`}
+            className={`flex h-20 w-20 items-center justify-center rounded-full mb-4 ${config.iconWrapper}`}
           >
             {config.icon}
           </div>
 
-          <CardTitle className="text-2xl tracking-tight">
+          <CardTitle className="text-3xl tracking-tight">
             {config.title}
           </CardTitle>
-          <CardDescription className="text-sm mt-1.5 max-w-sm">
+          <CardDescription className="text-base mt-2 max-w-md">
             {config.description}
           </CardDescription>
         </CardHeader>

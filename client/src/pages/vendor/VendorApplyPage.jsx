@@ -3,15 +3,24 @@ import VendorApplicationForm from "@/components/vendor/VendorApplicationForm";
 import ApplicationStatusCard from "@/components/vendor/ApplicationStatusCard";
 
 export default function VendorApplyPage() {
-  const { applicationStatus, rejectionReason } = useLoaderData();
+  const loaderData = useLoaderData();
+  const { applicationStatus } = loaderData;
 
-  if (applicationStatus === "pending" || applicationStatus === "rejected") {
+  if (applicationStatus === "pending") {
     return (
       <ApplicationStatusCard
         status={applicationStatus}
-        reason={rejectionReason}
       />
     );
   }
+
+  if (applicationStatus === "rejected") {
+    return (
+      <VendorApplicationForm
+        previousApplication={loaderData.application}
+      />
+    );
+  }
+
   return <VendorApplicationForm />;
 }

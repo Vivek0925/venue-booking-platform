@@ -57,7 +57,7 @@ function Field({ label, error, children, className = "" }) {
   );
 }
 
-export default function VendorApplicationForm() {
+export default function VendorApplicationForm({ previousApplication }) {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
@@ -74,6 +74,17 @@ export default function VendorApplicationForm() {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(kycSchema),
+    defaultValues: previousApplication
+      ? {
+          panName: previousApplication.panName || "",
+          phone: previousApplication.phone || "",
+          panNumber: previousApplication.panNumber || "",
+          address: previousApplication.address || "",
+          state: previousApplication.state || "",
+          district: previousApplication.district || "",
+          pincode: previousApplication.pincode || "",
+        }
+      : undefined,
   });
 
   const handleFile = (e) => {
@@ -244,6 +255,16 @@ export default function VendorApplicationForm() {
 
             <form onSubmit={handleSubmit(onSubmit)}>
               <fieldset disabled={loading} className="space-y-4">
+                {previousApplication?.rejectionReason && (
+                  <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700 mb-1">
+                      Reason for Rejection
+                    </p>
+                    <p className="text-sm text-amber-800 leading-relaxed">
+                      {previousApplication.rejectionReason}
+                    </p>
+                  </div>
+                )}
                 {submitError && (
                   <div className="p-3.5 bg-red-50 border border-red-200 text-red-600 text-xs rounded-xl flex items-center gap-2.5 font-medium">
                     <TriangleAlert className="w-4 h-4 shrink-0 text-red-500" />

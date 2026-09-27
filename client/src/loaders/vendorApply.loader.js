@@ -14,6 +14,12 @@ export async function vendorApplyLoader({ request }) {
     return redirect("/vendor/overview");
   }
 
-  const { applicationStatus, rejectionReason } = await getApplicationStatus();
-  return { user, applicationStatus, rejectionReason };
+  const data = await getApplicationStatus();
+  const { applicationStatus } = data;
+
+  if (applicationStatus === "approved") {
+    return redirect("/vendor/overview");
+  }
+
+  return { user, ...data };
 }
