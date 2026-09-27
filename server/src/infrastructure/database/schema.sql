@@ -43,21 +43,6 @@ CREATE TABLE IF NOT EXISTS refresh_tokens (
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS vendor_profiles (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID UNIQUE NOT NULL REFERENCES users (id) ON DELETE CASCADE,
-  vendor_name TEXT NOT NULL,
-  is_suspended BOOLEAN NOT NULL DEFAULT FALSE,
-  suspension_reason TEXT,
-  phone TEXT,
-  district TEXT,
-  state TEXT,
-  approved_at TIMESTAMPTZ DEFAULT NOW(),
-  CONSTRAINT vendor_suspension_reason_check CHECK (
-    is_suspended = FALSE OR suspension_reason IS NOT NULL
-  )
-);
-
 CREATE TABLE IF NOT EXISTS vendor_applications (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users (id) ON DELETE CASCADE,
@@ -79,6 +64,22 @@ CREATE TABLE IF NOT EXISTS vendor_applications (
     status != 'rejected' OR rejection_reason IS NOT NULL
   ),
   CONSTRAINT pan_format_check CHECK (pan_number ~ '^[A-Z]{5}[0-9]{4}[A-Z]$')
+);
+
+CREATE TABLE IF NOT EXISTS vendor_profiles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID UNIQUE NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  application_id UUID NOT NULL REFERENCES vendor_applications(id),
+  vendor_name TEXT NOT NULL,
+  is_suspended BOOLEAN NOT NULL DEFAULT FALSE,
+  suspension_reason TEXT,
+  phone TEXT,
+  district TEXT,
+  state TEXT,
+  approved_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT vendor_suspension_reason_check CHECK (
+    is_suspended = FALSE OR suspension_reason IS NOT NULL
+  )
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS unique_pending_application

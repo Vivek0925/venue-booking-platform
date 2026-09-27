@@ -52,6 +52,7 @@ export async function markVendorAsApproved(client, data) {
      WHERE id = $2
        AND status = 'pending'
      RETURNING
+       id,
        user_id,
        pan_name,
        phone,
@@ -65,9 +66,9 @@ export async function markVendorAsApproved(client, data) {
 
 export async function createVendorProfile(client, data) {
   await client.query(
-    `INSERT INTO vendor_profiles(user_id, vendor_name, phone, district, state)
-      VALUES ($1, $2, $3, $4, $5)`,
-    [data.userId, data.panName, data.phone, data.district, data.state]
+    `INSERT INTO vendor_profiles(id, user_id, vendor_name, phone, district, state)
+      VALUES ($1, $2, $3, $4, $5, $6)`,
+    [data.id, data.userId, data.panName, data.phone, data.district, data.state]
   );
 }
 

@@ -8,6 +8,7 @@ import {
   X,
   Loader2,
   AlertTriangle,
+  ExternalLink,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -123,6 +124,7 @@ export default function VendorApplicationsTable({
   status,
   fetchApplications,
   reviewApplication,
+  onViewProfile,
 }) {
   const config = STATUS_CONFIG[status];
   const Icon = config.icon;
@@ -213,9 +215,11 @@ export default function VendorApplicationsTable({
     { key: "reason", label: "Reason" }, // rejected only
     { key: "document", label: "Document" },
     { key: "actions", label: "Actions" }, // pending only
+    { key: "profile", label: "Profile" }, // approved only
   ].filter((col) => {
     if (col.key === "reason") return status === "rejected";
     if (col.key === "actions") return status === "pending";
+    if (col.key === "profile") return status === "approved" && !!onViewProfile;
     return true;
   });
 
@@ -363,6 +367,20 @@ export default function VendorApplicationsTable({
                           )}
                         </Button>
                       </div>
+                    </TableCell>
+                  )}
+
+                  {status === "approved" && onViewProfile && (
+                    <TableCell>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => onViewProfile(row)}
+                        className="h-8 gap-1.5 px-2.5 text-xs font-medium text-indigo-600 hover:bg-indigo-50 hover:text-indigo-700"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                        View Profile
+                      </Button>
                     </TableCell>
                   )}
                 </TableRow>

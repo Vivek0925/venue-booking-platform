@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 // Replace with your actual API import path
-import { getVendorProfile } from "@/api/admin.api";
+import { getVendorProfileByApplicationId } from "@/api/admin.api";
 
 // --- UTILITIES ---
 function formatDateTime(iso) {
@@ -134,7 +134,7 @@ export default function VendorProfilePage() {
       setLoading(true);
       setError(null);
       try {
-        const response = await getVendorProfile(id);
+        const response = await getVendorProfileByApplicationId(id);
         const data = response?.data || response; // Handle different axios response shapes
 
         if (isMounted) setVendor(data);

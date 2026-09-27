@@ -46,6 +46,6 @@ export async function reviewVenueApplication(applicationId, payload) {
   );
 }
 
-export async function getVendorProfile(vendorId) {
-  return adminAxiosInstance.get(`/admin/vendor/${vendorId}`);
+export async function getVendorProfileByApplicationId(applicationId) {
+  return adminAxiosInstance.get(`/admin/vendor/${applicationId}`);
 }
