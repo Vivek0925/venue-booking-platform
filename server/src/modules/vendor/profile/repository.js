@@ -1,4 +1,6 @@
-export async function findVendorProfileByUserId(client, id) {
+import toCamelCase from '../../../utils/camelcase.conversion.js';
+
+export async function findVendorProfileById(client, vendorId) {
   const result = await client.query(
     `
     SELECT
@@ -14,10 +16,10 @@ export async function findVendorProfileByUserId(client, id) {
     LEFT JOIN vendor_applications va
       ON va.user_id = vp.user_id
     WHERE va.status = 'approved'
-      AND vp.user_id = $1;
+      AND vp.id = $1;
     `,
-    [id]
+    [vendorId]
   );
 
-  return result.rows[0] ?? null;
+  return toCamelCase(result.rows[0]);
 }
