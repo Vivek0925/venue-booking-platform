@@ -6,7 +6,7 @@ import * as service from './service.js';
 
 export async function requestOtp(req, res) {
   await service.requestOtp(req.body.email);
-  return res.status(201).json({
+  return res.status(200).json({
     success: true,
     message: 'OTP sent successfully. Please check your email to continue.',
   });
