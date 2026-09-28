@@ -106,6 +106,7 @@ export default function VenueReviewApplication({
 }) {
   const [rejectReason, setRejectReason] = useState("");
   const [isRejectDialogOpen, setIsRejectDialogOpen] = useState(false);
+  const [isDocumentDialogOpen, setIsDocumentDialogOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
   if (!application) return null;
@@ -114,17 +115,18 @@ export default function VenueReviewApplication({
     id,
     name,
     category,
-    venue_details,
+    venueDetails,
     address,
     district,
     state,
     pincode,
     images = [],
-    proofDocumentUrl,
+    proofDocument,
     status,
     rejectionReason,
     submittedAt,
-    vendor,
+    vendorId,
+    vendorName,
   } = application;
 
   const displayedImage = selectedImage || images[0];
@@ -223,9 +225,9 @@ export default function VenueReviewApplication({
               {category}
             </Badge>
           </div>
-          {venue_details && (
+          {venueDetails && (
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">
-              {venue_details}
+              {venueDetails}
             </p>
           )}
         </div>
@@ -248,10 +250,10 @@ export default function VenueReviewApplication({
             <SectionLabel icon={User}>Vendor</SectionLabel>
             <div className="mt-3 pl-42px">
               <p className="text-sm font-medium text-slate-900">
-                {vendor?.name || "Unknown vendor"}
+                {vendorName || "Unknown vendor"}
               </p>
               <Link
-                to={`/admin/vendor/profile/${vendor?.id}`}
+                to={`/admin/vendor/profile/${vendorId}`}
                 className="mt-1 inline-flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-700"
               >
                 View vendor profile
@@ -266,12 +268,14 @@ export default function VenueReviewApplication({
           <div className="border-b border-slate-100 p-5 sm:border-b-0 sm:border-r sm:p-6">
             <SectionLabel icon={FileText}>Ownership document</SectionLabel>
             <div className="mt-3 pl-42px">
-              {proofDocumentUrl ? (
-                <Button variant="outline" size="sm" asChild>
-                  <a href={proofDocumentUrl} target="_blank" rel="noreferrer">
-                    <Eye className="mr-1.5 h-3.5 w-3.5" />
-                    View document
-                  </a>
+              {proofDocument ? (
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => setIsDocumentDialogOpen(true)}
+                >
+                  <Eye className="mr-1.5 h-3.5 w-3.5" />
+                  View document
                 </Button>
               ) : (
                 <p className="text-sm text-slate-400">No document attached</p>
@@ -358,6 +362,28 @@ export default function VenueReviewApplication({
               Confirm rejection
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Document dialog */}
+      <Dialog open={isDocumentDialogOpen} onOpenChange={setIsDocumentDialogOpen}>
+        <DialogContent className="max-w-4xl bg-transparent border-0 p-0 shadow-none">
+          <div className="relative flex justify-center items-center p-4">
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              onClick={() => setIsDocumentDialogOpen(false)}
+              className="absolute top-0 right-0 z-10 rounded-full bg-white/80 hover:bg-white text-slate-900 border-0"
+            >
+              <X className="h-5 w-5" />
+            </Button>
+            <img 
+              src={proofDocument} 
+              alt="Ownership document" 
+              className="max-h-[85vh] w-auto rounded-xl object-contain shadow-2xl" 
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </div>

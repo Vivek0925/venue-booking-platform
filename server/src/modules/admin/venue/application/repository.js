@@ -39,10 +39,7 @@ ORDER BY submitted_at ASC
 
 export async function fetchApplication(applicationId) {
   const result = await pool.query(
-    `
-    SELECT *
-    FROM (
-      SELECT
+    `SELECT
         va.id,
         va.name,
         va.category,
@@ -58,25 +55,19 @@ export async function fetchApplication(applicationId) {
         va.rejection_reason,
         va.submitted_at,
         va.reviewed_at,
-        va.reviewed_by,
         va.status,
-        a.id AS reviewer_id,
-        a.email AS reviewer_email,
         vp.id AS vendor_id,
         vp.vendor_name
-      FROM venue_applications va
-      JOIN vendor_profiles vp
+    FROM venue_applications va
+    JOIN vendor_profiles vp
         ON vp.id = va.vendor_id
-      LEFT JOIN admins a
-        ON a.id = va.reviewed_by
-    ) AS latest_application
-    WHERE latest_application.id = $1
+    WHERE va.id = $1
       
     `,
     [applicationId]
   );
 
-  return result.rows[0];
+  return toCamelCase(result.rows[0]);
 }
 
 export async function markVenueAsRejected(reviewerId, applicationId, data) {
