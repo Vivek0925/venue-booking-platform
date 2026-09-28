@@ -15,3 +15,12 @@ export async function getVendorProfileByApplicationId(applicationId) {
   }
   return vendor;
 }
+
+export async function getVendorProfileById(vendorId) {
+  const vendor = await repository.fetchVendorProfileById(vendorId);
+
+  if (!vendor) {
+    throw new ApiError(PROFILE_ERROR_CONFIG.VENDOR_NOT_FOUND);
+  }
+  return vendor;
+}

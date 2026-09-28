@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 // Replace with your actual API import path
-import { getVendorProfileByApplicationId } from "@/api/admin.api";
+import { getVendorProfileByVendorId } from "@/api/admin.api";
 
 // --- UTILITIES ---
 function formatDateTime(iso) {
@@ -134,7 +134,7 @@ export default function VendorProfilePage() {
       setLoading(true);
       setError(null);
       try {
-        const response = await getVendorProfileByApplicationId(id);
+        const response = await getVendorProfileByVendorId(id);
         const data = response?.data || response; // Handle different axios response shapes
 
         if (isMounted) setVendor(data);
@@ -241,24 +241,24 @@ export default function VendorProfilePage() {
       {/* Hero Header Banner */}
       <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
         {/* Decorative Background */}
-        <div className="absolute inset-0 h-24 bg-li-to-r from-indigo-500 via-purple-500 to-indigo-600 sm:h-32" />
+        <div className="absolute inset-0 h-20 sm:h-24" />
 
-        <div className="relative px-6 pb-6 pt-16 sm:px-10 sm:pt-22">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+        <div className="relative px-6 pb-5 pt-12 sm:px-10 sm:pt-16">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
               {/* Avatar Profile */}
-              <div className="relative flex h-24 w-24 shrink-0 items-center justify-center rounded-3xl border-4 border-white bg-slate-900 text-3xl font-bold text-white shadow-md sm:h-32 sm:w-32 sm:text-4xl">
+              <div className="relative flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl border-4 border-white bg-slate-900 text-2xl font-bold text-white shadow-md sm:h-24 sm:w-24 sm:text-3xl">
                 {getInitials(vendorName)}
                 {isVerified && !isSuspended && (
-                  <div className="absolute -bottom-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full border-4 border-white bg-emerald-500 text-white shadow-sm">
-                    <CheckCircle2 className="h-5 w-5" />
+                  <div className="absolute -bottom-1.5 -right-1.5 flex h-7 w-7 items-center justify-center rounded-full border-[3px] border-white bg-emerald-500 text-white shadow-sm">
+                    <CheckCircle2 className="h-4 w-4" />
                   </div>
                 )}
               </div>
 
               {/* Name & Badges */}
-              <div className="mb-2 space-y-2">
-                <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+              <div className="mb-1 space-y-1.5">
+                <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
                   {vendorName}
                 </h1>
                 <div className="flex flex-wrap items-center gap-2">
@@ -283,7 +283,7 @@ export default function VendorProfilePage() {
             </div>
 
             {/* Actions / Meta */}
-            <div className="mb-2 flex flex-col items-start sm:items-end gap-2">
+            <div className="mb-1 flex flex-col items-start sm:items-end gap-1.5">
               <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">
                 System ID
               </span>
