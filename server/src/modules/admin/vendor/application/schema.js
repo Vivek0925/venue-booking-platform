@@ -14,39 +14,33 @@ const rejectionReason = z.enum(REJECTION_REASONS, {
   message: 'Invalid rejection reason',
 });
 
-const applicationStatus = z
-  .string()
-  .trim()
-  .toLowerCase()
-  .pipe(
-    z.enum(['pending', 'approved', 'rejected'], {
-      message: 'Status must be pending, approved, or rejected',
-    })
-  );
-
-const reviewStatus = z
-  .string()
-  .trim()
-  .toLowerCase()
-  .pipe(
-    z.enum(['approved', 'rejected'], {
-      message: 'Review status must be either approved or rejected',
-    })
-  );
-
-const UUID = z.string().trim().uuid({ message: 'Invalid id' });
-
 export const status = z.object({
-  status: applicationStatus,
+  status: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .pipe(
+      z.enum(['pending', 'approved', 'rejected'], {
+        message: 'Status must be pending, approved, or rejected',
+      })
+    ),
 });
 
 export const applicationId = z.object({
-  applicationId: UUID,
+  applicationId: z.string().trim().uuid({ message: 'Invalid applicationId' }),
 });
 
 export const review = z
   .object({
-    status: reviewStatus,
+    status: z
+      .string()
+      .trim()
+      .toLowerCase()
+      .pipe(
+        z.enum(['approved', 'rejected'], {
+          message: 'Review status must be either approved or rejected',
+        })
+      ),
 
     rejectionReason: rejectionReason.optional(),
   })
@@ -65,5 +59,5 @@ export const review = z
   );
 
 export const vendorId = z.object({
-  vendorId: UUID,
+  vendorId: z.string().trim().uuid({ message: 'Invalid venueId' }),
 });

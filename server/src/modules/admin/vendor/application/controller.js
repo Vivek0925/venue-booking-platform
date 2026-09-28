@@ -2,12 +2,12 @@ import * as service from './service.js';
 
 export async function getApplicationsCounts(req, res) {
   const data = await service.getApplicationsCounts();
-  res.status(200).json({ status: true, data });
+  res.status(200).json({ success: true, data });
 }
 
 export async function getApplications(req, res) {
   const data = await service.getApplications(req.query.status);
-  res.status(200).json({ status: true, data });
+  res.status(200).json({ success: true, data });
 }
 
 export async function reviewApplication(req, res) {
@@ -16,8 +16,8 @@ export async function reviewApplication(req, res) {
     req.params.applicationId,
     req.body
   );
-  res.status(201).json({
-    status: true,
+  res.status(200).json({
+    success: true,
     message: 'Vendor application reviewed successfully',
   });
 }
