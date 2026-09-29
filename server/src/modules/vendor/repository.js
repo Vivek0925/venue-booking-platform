@@ -1,4 +1,4 @@
-import { pool } from '../../infrastructure/database/db.js';
+import pool from '../../infrastructure/database/db.js';
 
 export async function findVendorId(userId) {
   const result = await pool.query(

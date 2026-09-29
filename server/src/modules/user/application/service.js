@@ -1,6 +1,6 @@
 import path from 'path';
 
-import { pool } from '../../../infrastructure/database/db.js';
+import pool from '../../../infrastructure/database/db.js';
 import ApiError from '../../../utils/api.error.js';
 import { deleteFromR2, uploadToR2 } from '../../../utils/r2.storage.js';
 import { withTransaction } from '../../../utils/transaction.js';

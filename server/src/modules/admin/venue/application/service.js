@@ -1,4 +1,4 @@
-import { pool } from '../../../../infrastructure/database/db.js';
+import pool from '../../../../infrastructure/database/db.js';
 import ApiError from '../../../../utils/api.error.js';
 import { getPrivateUrl } from '../../../../utils/r2.storage.js';
 import { withTransaction } from '../../../../utils/transaction.js';

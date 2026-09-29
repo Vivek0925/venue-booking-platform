@@ -1,5 +1,5 @@
 import { ERROR_CONFIG } from '../../../config/error.config.js';
-import { pool } from '../../../infrastructure/database/db.js';
+import pool from '../../../infrastructure/database/db.js';
 import ApiError from '../../../utils/api.error.js';
 import { getPrivateUrl } from '../../../utils/r2.storage.js';
 import { USER_ERROR_CONFIG } from '../../user/error.config.js';

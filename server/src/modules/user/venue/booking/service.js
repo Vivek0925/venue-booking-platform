@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-import { pool } from '../../../../infrastructure/database/db.js';
+import pool from '../../../../infrastructure/database/db.js';
 import razorpay from '../../../../infrastructure/razorpay/razorpay.js';
 import ApiError from '../../../../utils/api.error.js';
 import { getFromCloudinary } from '../../../../utils/cloudinary.storage.js';

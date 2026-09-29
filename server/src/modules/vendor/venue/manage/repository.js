@@ -1,4 +1,4 @@
-import { pool } from '../../../../infrastructure/database/db.js';
+import pool from '../../../../infrastructure/database/db.js';
 
 export async function featchVenues(vendorId) {
   const result = await pool.query(

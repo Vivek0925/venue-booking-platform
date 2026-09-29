@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-import { redis } from '../../../infrastructure/redis/redis.js';
+import redis from '../../../infrastructure/redis/redis.js';
 import { ADMIN_AUTH_CONFIG } from '../auth/config.js';
 
 export async function createAdminSession(adminId) {

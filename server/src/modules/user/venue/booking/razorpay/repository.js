@@ -1,4 +1,4 @@
-import { pool } from '../../../../../infrastructure/database/db.js';
+import pool from '../../../../../infrastructure/database/db.js';
 import toCamelCase from '../../../../../utils/camelcase.conversion.js';
 import { withTransaction } from '../../../../../utils/transaction.js';
 

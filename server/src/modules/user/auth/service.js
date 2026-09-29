@@ -1,5 +1,5 @@
 import { ERROR_CONFIG } from '../../../config/error.config.js';
-import { pool } from '../../../infrastructure/database/db.js';
+import pool from '../../../infrastructure/database/db.js';
 import ApiError from '../../../utils/api.error.js';
 import { withTransaction } from '../../../utils/transaction.js';
 import sendOtpEmail from '../email.service.js';

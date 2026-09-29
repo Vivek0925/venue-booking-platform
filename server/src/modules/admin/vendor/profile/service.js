@@ -1,4 +1,4 @@
-import { pool } from '../../../../infrastructure/database/db.js';
+import pool from '../../../../infrastructure/database/db.js';
 import ApiError from '../../../../utils/api.error.js';
 import { withTransaction } from '../../../../utils/transaction.js';
 import { PROFILE_ERROR_CONFIG } from './error.config.js';

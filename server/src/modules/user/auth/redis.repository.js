@@ -3,7 +3,7 @@ import {
   emailRateLimiter,
   otpSendLimiter,
 } from '../../../infrastructure/redis/ratelimit.js';
-import { redis } from '../../../infrastructure/redis/redis.js';
+import redis from '../../../infrastructure/redis/redis.js';
 import ApiError from '../../../utils/api.error.js';
 import { USER_ERROR_CONFIG } from '../error.config.js';
 import { USER_AUTH_CONFIG } from './config.js';

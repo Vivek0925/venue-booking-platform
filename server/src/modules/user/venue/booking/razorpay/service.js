@@ -1,4 +1,4 @@
-import { pool } from '../../../../../infrastructure/database/db.js';
+import pool from '../../../../../infrastructure/database/db.js';
 import { withTransaction } from '../../../../../utils/transaction.js';
 import { booking } from '../../../../vendor/venue/manage/schema.js';
 import { sendBookingConfirmationEmail } from '../../../email.service.js';

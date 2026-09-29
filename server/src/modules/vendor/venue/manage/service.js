@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-import { pool } from '../../../../infrastructure/database/db.js';
+import pool from '../../../../infrastructure/database/db.js';
 import ApiError from '../../../../utils/api.error.js';
 import {
   deleteFromCloudinary,

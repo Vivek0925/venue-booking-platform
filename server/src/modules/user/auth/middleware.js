@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { pool } from '../../../infrastructure/database/db.js';
+import pool from '../../../infrastructure/database/db.js';
 import ApiError from '../../../utils/api.error.js';
 import { USER_ERROR_CONFIG } from '../error.config.js';
 import { USER_AUTH_CONFIG } from './config.js';

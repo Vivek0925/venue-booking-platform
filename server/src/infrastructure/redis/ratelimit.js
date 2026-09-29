@@ -2,7 +2,7 @@ import { Ratelimit } from '@upstash/ratelimit';
 
 import AUTH_CONFIG from '../../config/config.js';
 import { USER_AUTH_CONFIG } from '../../modules/user/auth/config.js';
-import { redis } from './redis.js';
+import redis from './redis.js';
 
 function rateLimiter(maxRequests, windowSize, prefixName) {
   return new Ratelimit({
