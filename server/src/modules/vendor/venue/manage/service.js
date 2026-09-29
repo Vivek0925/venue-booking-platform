@@ -39,30 +39,19 @@ export async function getVenues(vendorId) {
   };
 }
 
-export async function getVenuesApplication(vendorId, applicationId) {
+export async function getVenueApplication(vendorId, applicationId) {
   const venue = await repository.fetchVenueApplication(vendorId, applicationId);
 
   if (!venue) {
     throw new ApiError(ERROR_CONFIG.VENUE_NOT_FOUND);
   }
 
+  const { coverImageKey, proofDocumentKey, ...data } = venue;
+
   return {
-    id: venue.id,
-    venueApplicationGroupId: venue.venue_application_group_id,
-    name: venue.name,
-    venueDetails: venue.venue_details,
-    category: venue.category,
-    address: venue.address,
-    district: venue.district,
-    state: venue.state,
-    pincode: venue.pincode,
-    latitude: venue.latitude,
-    longitude: venue.longitude,
-    coverImageUrl: (await getPrivateUrl([venue.cover_image_key]))[0],
-    proofDocumentUrl: (await getPrivateUrl([venue.proof_document_key]))[0],
-    status: venue.status,
-    rejectionReason: venue.rejection_reason,
-    submittedAt: venue.submitted_at,
+    ...data,
+    coverImage: (await getPrivateUrl([venue.coverImageKey]))[0],
+    proofDocument: (await getPrivateUrl([venue.proofDocumentKey]))[0],
     images: await getPrivateUrl(venue.images),
   };
 }
@@ -78,7 +67,7 @@ export async function getVenueDetails(vendorId, venueId) {
     await repository.fetchReverificationApplication(venueId);
 
   const coverImageId = `venues/${vendorId}/${venueId}/cover_image`;
-  const [coverImageUrl] = await getFromCloudinary([coverImageId]);
+  const [coverImage] = await getFromCloudinary([coverImageId]);
   const imageUrls = await getFromCloudinary(venue.images ?? []);
   const pricing = await repository.getVenuePricing(venueId);
 
@@ -101,7 +90,7 @@ export async function getVenueDetails(vendorId, venueId) {
       status: venue.status,
       suspensionReason: venue.suspension_reason,
       createdAt: venue.created_at,
-      coverImageUrl: venue.has_cover_image ? coverImageUrl : null,
+      coverImage: venue.has_cover_image ? coverImage : null,
       imageUrls: imageUrls,
     },
     reverification: {

@@ -8,8 +8,8 @@ export async function getVenues(req, res) {
   });
 }
 
-export async function getVenuesApplication(req, res) {
-  const data = await service.getVenuesApplication(
+export async function getVenueApplication(req, res) {
+  const data = await service.getVenueApplication(
     req.vendor.id,
     req.params.applicationId
   );

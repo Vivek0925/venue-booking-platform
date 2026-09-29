@@ -13,7 +13,7 @@ router.get('/venues', controller.getVenues);
 router.get(
   '/venues/applications/:applicationId',
   validateSchema(schema.applicationId, 'params'),
-  controller.getVenuesApplication
+  controller.getVenueApplication
 );
 
 router.get(

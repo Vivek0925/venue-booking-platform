@@ -340,11 +340,11 @@ function DetailedCard({ application, onPreviewDoc }) {
             <div className="mt-4 overflow-hidden rounded-lg border border-slate-200 bg-white p-2">
               <button
                 type="button"
-                onClick={() => onPreviewDoc?.(application.proofDocumentUrl)}
+                onClick={() => onPreviewDoc?.(application.proofDocument)}
                 className="group relative aspect-4/3 w-full cursor-pointer overflow-hidden rounded bg-slate-100"
               >
                 <img
-                  src={application.proofDocumentUrl}
+                  src={application.proofDocument}
                   alt="Proof doc thumbnail"
                   className="h-full w-full object-cover transition group-hover:scale-105"
                 />
@@ -358,7 +358,7 @@ function DetailedCard({ application, onPreviewDoc }) {
           </div>
           <Button
             variant="outline"
-            onClick={() => onPreviewDoc?.(application.proofDocumentUrl)}
+            onClick={() => onPreviewDoc?.(application.proofDocument)}
             className="mt-4 w-full gap-2 rounded-xl text-xs font-semibold text-slate-700"
           >
             <ExternalLink className="h-3.5 w-3.5" />

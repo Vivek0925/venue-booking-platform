@@ -181,7 +181,7 @@ export default function VenueManagementPage() {
         venueData
           ? {
               ...venueData,
-              coverImageUrl: withCacheBust(venueData.coverImageUrl),
+              coverImage: withCacheBust(venueData.coverImage),
             }
           : venueData,
       );
@@ -709,9 +709,9 @@ export default function VenueManagementPage() {
                 }
                 className="p-4! sm:p-5! lg:col-span-3"
               >
-                {venue.coverImageUrl ? (
+                {venue.coverImage ? (
                   <img
-                    src={venue.coverImageUrl}
+                    src={venue.coverImage}
                     alt={`${venue.name} cover`}
                     className="aspect-4/5 w-full rounded-2xl border border-slate-200 object-cover"
                   />

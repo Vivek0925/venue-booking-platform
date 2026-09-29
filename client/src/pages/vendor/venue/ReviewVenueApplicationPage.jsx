@@ -133,8 +133,8 @@ function ResubmitForm({ application, onCancel, onSuccess }) {
     async function hydrateExistingMedia() {
       try {
         const [cover, proof, ...gallery] = await Promise.all([
-          urlToFile(application.coverImageUrl, "existing-cover.jpg"),
-          urlToFile(application.proofDocumentUrl, "existing-proof.jpg"),
+          urlToFile(application.coverImage, "existing-cover.jpg"),
+          urlToFile(application.proofDocument, "existing-proof.jpg"),
           ...existingVenueImages.map((url, index) =>
             urlToFile(url, `existing-venue-${index + 1}.jpg`),
           ),
@@ -300,7 +300,7 @@ function ResubmitForm({ application, onCancel, onSuccess }) {
         <Section title="Cover Image">
           <UploadTile
             title="Cover Image"
-            file={coverImage || application.coverImageUrl}
+            file={coverImage || application.coverImage}
             onChange={(event) => setCoverImage(event.target.files?.[0] ?? null)}
           >
             {coverImage ? (
@@ -309,9 +309,9 @@ function ResubmitForm({ application, onCancel, onSuccess }) {
                 alt="Cover preview"
                 className="absolute inset-0 h-full w-full object-cover"
               />
-            ) : application.coverImageUrl ? (
+            ) : application.coverImage ? (
               <img
-                src={application.coverImageUrl}
+                src={application.coverImage}
                 alt="Current cover"
                 className="absolute inset-0 h-full w-full object-cover"
               />
@@ -323,7 +323,7 @@ function ResubmitForm({ application, onCancel, onSuccess }) {
         <Section title="Proof of Ownership">
           <UploadTile
             title="Proof Document"
-            file={proofDocument || application.proofDocumentUrl}
+            file={proofDocument || application.proofDocument}
             onChange={(event) =>
               setProofDocument(event.target.files?.[0] ?? null)
             }
@@ -334,9 +334,9 @@ function ResubmitForm({ application, onCancel, onSuccess }) {
                 alt="Proof preview"
                 className="absolute inset-0 h-full w-full object-cover"
               />
-            ) : application.proofDocumentUrl ? (
+            ) : application.proofDocument ? (
               <img
-                src={application.proofDocumentUrl}
+                src={application.proofDocument}
                 alt="Current proof document"
                 className="absolute inset-0 h-full w-full object-contain"
               />
@@ -498,14 +498,14 @@ function ReadOnlyApplication({ application, onEdit }) {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
         <Section title="Cover Image">
           <img
-            src={application.coverImageUrl}
+            src={application.coverImage}
             alt={`${application.name} cover`}
             className="h-80 w-full rounded-xl border border-slate-200 bg-slate-50 object-cover sm:h-28rem"
           />
         </Section>
         <Section title="Proof of Ownership">
           <img
-            src={application.proofDocumentUrl}
+            src={application.proofDocument}
             alt="Proof of ownership"
             className="h-80 w-full rounded-xl border border-slate-200 bg-slate-50 object-contain sm:h-28rem"
           />

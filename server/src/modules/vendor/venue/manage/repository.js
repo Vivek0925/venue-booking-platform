@@ -11,6 +11,27 @@ export async function featchVenues(vendorId) {
   return result.rows;
 }
 
+export async function fetchVenueApplication(vendorId, applicationId) {
+  const result = await pool.query(
+    `
+    SELECT *
+    FROM (
+      SELECT DISTINCT ON (venue_application_group_id)
+        id, venue_application_group_id, name, venue_details, category, address, district, state, pincode,
+        ST_Y(geo_loc::geometry) AS latitude,
+        ST_X(geo_loc::geometry) AS longitude,
+        images, status, cover_image_key, proof_document_key, rejection_reason, submitted_at
+      FROM venue_applications
+      WHERE vendor_id = $1 AND id = $2 
+      ORDER BY venue_application_group_id, submitted_at DESC
+    ) AS latest_venue_application_per_group
+    WHERE status IN ('pending', 'rejected')
+    `,
+    [vendorId, applicationId]
+  );
+  return toCamelCase(result.rows[0]);
+}
+
 export async function fetchVenuesApplicationStatus(vendorId) {
   const result = await pool.query(
     `
@@ -33,27 +54,6 @@ WHERE status IN ('pending', 'rejected');`,
     [vendorId]
   );
   return result.rows.map((row) => toCamelCase(row));
-}
-
-export async function fetchVenueApplication(vendorId, applicationId) {
-  const result = await pool.query(
-    `
-    SELECT *
-    FROM (
-      SELECT DISTINCT ON (venue_application_group_id)
-        id, venue_application_group_id, name, venue_details, category, address, district, state, pincode,
-        ST_Y(geo_loc::geometry) AS latitude,
-        ST_X(geo_loc::geometry) AS longitude,
-        images, status, cover_image_key, proof_document_key, rejection_reason, submitted_at
-      FROM venue_applications
-      WHERE vendor_id = $1 AND id = $2 
-      ORDER BY venue_application_group_id, submitted_at DESC
-    ) AS latest_per_group
-    WHERE status IN ('pending', 'rejected')
-    `,
-    [vendorId, applicationId]
-  );
-  return result.rows[0] ?? null;
 }
 
 export async function fetchVenue(vendorId, venueId) {
