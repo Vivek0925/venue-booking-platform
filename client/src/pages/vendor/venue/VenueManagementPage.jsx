@@ -366,6 +366,11 @@ export default function VenueManagementPage() {
     setStatusSaving(true);
     setStatusError("");
     setSuccessMessage("");
+    setDescriptionError("");
+    setCoverError("");
+    setGalleryError("");
+    setPricingError("");
+    setHoursError("");
 
     try {
       const response = await updateVenueStatus(venueId, statusValue);
@@ -378,9 +383,23 @@ export default function VenueManagementPage() {
       );
       setStatusEditing(false);
     } catch (err) {
-      setStatusError(
-        err?.response?.data?.message || "Could not update venue status.",
-      );
+      const data = err?.response?.data;
+      if (
+        data?.code === "INCOMPLETE_VENUE_DETAILS" &&
+        Array.isArray(data?.errors)
+      ) {
+        setStatusError(data.message || "Incomplete venue details.");
+        data.errors.forEach((e) => {
+          if (e.field === "description") setDescriptionError(e.message);
+          else if (e.field === "cover_image") setCoverError(e.message);
+          else if (e.field === "images") setGalleryError(e.message);
+          else if (e.field === "booking_type") setPricingError(e.message);
+          else if (e.field === "opening_time & closing_time")
+            setHoursError(e.message);
+        });
+      } else {
+        setStatusError(data?.message || "Could not update venue status.");
+      }
     } finally {
       setStatusSaving(false);
     }
