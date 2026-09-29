@@ -16,7 +16,11 @@ const ALLOWED_STATES = [
 ];
 
 const schema = z.object({
-  name: z.string().trim().min(1, 'Venue name is required'),
+  name: z
+    .string()
+    .trim()
+    .min(1, 'Venue name is required')
+    .regex(/[a-zA-Z]/, 'Venue name must contain at least one letter'),
 
   venueDetails: z.string().trim().min(10, 'Venue details is required'),
 
