@@ -5,7 +5,7 @@ import ApiError from '../utils/api.error.js';
 
 export async function validateFileType(req, res, next) {
   if (!req.file && !req.files) {
-    throw new ApiError(ERROR_CONFIG.FILES_REQUIRED);
+    throw new ApiError(ERROR_CONFIG.FILE_REQUIRED);
   }
 
   if (req.file) {

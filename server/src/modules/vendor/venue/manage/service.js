@@ -23,7 +23,7 @@ export async function getVenues(vendorId) {
       };
     })
   );
-  const applications = await repository.fetchVenuesApplicationStatus(vendorId);
+  const applications = await repository.fetchVenuesApplications(vendorId);
   const venueApplications = await Promise.all(
     applications.map(async (application) => {
       const { coverImageKey, ...data } = application;
@@ -80,15 +80,14 @@ export async function uploadCoverImage(vendorId, venueId, file) {
       throw new ApiError(ERROR_CONFIG.VENUE_NOT_FOUND);
     }
 
-    const coverImageId = `venues/${vendorId}/${venueId}/cover_image`;
-    await uploadToCloudinary(file.buffer, coverImageId);
+    const coverImageKey = `venues/${vendorId}/${venueId}/cover_image`;
+    await uploadToCloudinary(file.buffer, coverImageKey);
 
-    if (!venue.has_cover_image) {
+    if (!venue.hasCoverImage) {
       return await repository.updateCoverImage(vendorId, venueId);
     }
   } catch (err) {
     if (err instanceof ApiError) throw err;
-
     throw new ApiError(ERROR_CONFIG.FILE_UPLOAD_FAILED);
   }
 }
@@ -131,7 +130,7 @@ export async function uploadVenueImages({
     const uploadFiles = [];
 
     for (const file of files) {
-      const path = `venues/${vendorId}/${venueId}/venue_image-${crypto.randomUUID()}`;
+      const path = `venues/${vendorId}/${venueId}/venue_image-${randomUUID()}`;
 
       await uploadToCloudinary(file.buffer, path);
 
@@ -167,23 +166,19 @@ export async function updateVenueDescription(vendorId, venueId, description) {
   return;
 }
 
-export async function updateVenueHours(
-  vendorId,
-  venueId,
-  { opening_time, closing_time }
-) {
+export async function updateVenueHours(vendorId, venueId, data) {
   const venue = await repository.updateVenueTime(
     venueId,
     vendorId,
-    opening_time,
-    closing_time
+    data.opening_time,
+    data.closing_time
   );
 
   if (!venue) {
     throw new ApiError(ERROR_CONFIG.VENUE_NOT_FOUND);
   }
 
-  return venue;
+  return;
 }
 
 export async function updateVenuePricing(vendorId, venueId, data) {

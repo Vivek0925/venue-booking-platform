@@ -32,7 +32,7 @@ export async function fetchVenueApplication(vendorId, applicationId) {
   return toCamelCase(result.rows[0]);
 }
 
-export async function fetchVenuesApplicationStatus(vendorId) {
+export async function fetchVenuesApplications(vendorId) {
   const result = await pool.query(
     `
   SELECT id, name, category, district, state, status, cover_image_key, submitted_at
@@ -75,22 +75,6 @@ export async function getVenuePricing(venueId) {
   return result.rows.map(toCamelCase);
 }
 
-export async function fetchReverificationApplication(venueId) {
-  const result = await pool.query(
-    `SELECT id, category, address, district, state, pincode, ST_Y(geo_loc::geometry) AS latitude,
-    ST_X(geo_loc::geometry) AS longitude,
-            status, rejection_reason, submitted_at, reviewed_at
-     FROM venue_reverifications
-     WHERE venue_id = $1
-       AND status IN ('pending', 'rejected')
-     ORDER BY submitted_at DESC
-     LIMIT 1`,
-    [venueId]
-  );
-
-  return result.rows[0] ?? null;
-}
-
 export async function getCoverImage(vendorId, venueId) {
   const result = await pool.query(
     `
@@ -100,8 +84,7 @@ export async function getCoverImage(vendorId, venueId) {
     `,
     [venueId, vendorId]
   );
-
-  return result.rows[0] ?? null;
+  return toCamelCase(result.rows[0]);
 }
 
 export async function updateCoverImage(vendorId, venueId) {
@@ -140,10 +123,13 @@ export async function fetchVenueDetails(client, vendorId, venueId) {
 export async function updateVenueDescription(vendorId, venueId, description) {
   const result = await pool.query(
     `
-    UPDATE venues SET description = $1 WHERE id = $2 AND vendor_id = $3 RETURNING id`,
+    UPDATE venues 
+    SET description = $1 
+    WHERE id = $2 
+    AND vendor_id = $3 
+    RETURNING id`,
     [description, venueId, vendorId]
   );
-
   return result.rows[0]?.id ?? null;
 }
 
@@ -166,7 +152,7 @@ export async function updateVenueTime(
     [openingTime, closingTime, venueId, vendorId]
   );
 
-  return result.rows[0] ?? null;
+  return toCamelCase(result.rows[0]);
 }
 
 export async function updateBookingType(client, data) {
