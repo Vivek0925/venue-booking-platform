@@ -19,6 +19,7 @@ import {
   uploadVenueImages,
   updateVenueDescription,
   updateVenueHours,
+  updateVenueCapacity,
   updateVenuePricing,
   updateVenueStatus,
 } from "@/api/vendor.api";
@@ -164,6 +165,10 @@ export default function VenueManagementPage() {
   const [closingTime, setClosingTime] = useState("");
   const [hoursSaving, setHoursSaving] = useState(false);
   const [hoursError, setHoursError] = useState("");
+  const [capacityEditing, setCapacityEditing] = useState(false);
+  const [capacityValue, setCapacityValue] = useState("");
+  const [capacitySaving, setCapacitySaving] = useState(false);
+  const [capacityError, setCapacityError] = useState("");
   const [pricingBookingType, setPricingBookingType] = useState("whole_day");
   const [pricingRows, setPricingRows] = useState([]);
   const [pricingEditing, setPricingEditing] = useState(false);
@@ -189,6 +194,9 @@ export default function VenueManagementPage() {
       setDescriptionValue(venueData?.description ?? "");
       setOpeningTime(normalizeTime(venueData?.openingTime));
       setClosingTime(normalizeTime(venueData?.closingTime));
+      setCapacityValue(
+        venueData?.capacity == null ? "" : String(venueData.capacity),
+      );
       const bookingType = venueData?.bookingType ?? "whole_day";
       setPricingBookingType(bookingType);
       setPricingRows(
@@ -362,6 +370,37 @@ export default function VenueManagementPage() {
     }
   }
 
+  async function saveCapacity() {
+    const capacity = Number(capacityValue);
+    if (!Number.isInteger(capacity) || capacity <= 0) {
+      setCapacityError("Capacity must be a positive whole number.");
+      return;
+    }
+
+    setCapacitySaving(true);
+    setCapacityError("");
+    setSuccessMessage("");
+    try {
+      const response = await updateVenueCapacity(venueId, capacity);
+      const savedCapacity = response?.capacity ?? capacity;
+      setCapacityValue(String(savedCapacity));
+      setSuccessMessage(
+        response?.message || "Venue capacity updated successfully.",
+      );
+      setSuccessSection("capacity");
+      setCapacityEditing(false);
+      setVenue((current) =>
+        current ? { ...current, capacity: savedCapacity } : current,
+      );
+    } catch (err) {
+      setCapacityError(
+        err?.response?.data?.message || "Could not update venue capacity.",
+      );
+    } finally {
+      setCapacitySaving(false);
+    }
+  }
+
   async function saveStatus() {
     setStatusSaving(true);
     setStatusError("");
@@ -371,6 +410,7 @@ export default function VenueManagementPage() {
     setGalleryError("");
     setPricingError("");
     setHoursError("");
+    setCapacityError("");
 
     try {
       const response = await updateVenueStatus(venueId, statusValue);
@@ -396,6 +436,7 @@ export default function VenueManagementPage() {
           else if (e.field === "booking_type") setPricingError(e.message);
           else if (e.field === "opening_time & closing_time")
             setHoursError(e.message);
+          else if (e.field === "capacity") setCapacityError(e.message);
         });
       } else {
         setStatusError(data?.message || "Could not update venue status.");
@@ -680,6 +721,7 @@ export default function VenueManagementPage() {
                 <DetailCard label="Pincode" value={venue.pincode} />
                 <DetailCard label="Latitude" value={venue.latitude} />
                 <DetailCard label="Longitude" value={venue.longitude} />
+                <DetailCard label="Capacity" value={venue.capacity} />
               </div>
             </SectionCard>
 
@@ -767,7 +809,7 @@ export default function VenueManagementPage() {
                       )}
                     </Button>
                   }
-                  className="min-h-72 lg:min-h-80"
+                  className="min-h-72 lg:min-h-48"
                 >
                   {descriptionEditing ? (
                     <textarea
@@ -831,7 +873,7 @@ export default function VenueManagementPage() {
                     </Button>
                   }
                 >
-                  <div className="grid grid-cols-1 gap-4">
+                  <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     <div className="rounded-2xl border border-slate-200 p-5">
                       <div className="flex items-center justify-between">
                         <p className="flex items-center gap-2 text-sm font-semibold text-slate-700">
@@ -887,6 +929,68 @@ export default function VenueManagementPage() {
                         </p>
                       )}
                       {successSection === "hours" && successMessage && (
+                        <p className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">
+                          {successMessage}
+                        </p>
+                      )}
+                    </div>
+                    <div className="rounded-2xl border border-slate-200 p-5">
+                      <div className="flex items-center justify-between gap-4">
+                        <p className="text-sm font-semibold text-slate-700">
+                          Venue Capacity
+                        </p>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            if (capacityEditing) {
+                              void saveCapacity();
+                            } else {
+                              setCapacityEditing(true);
+                            }
+                          }}
+                          disabled={capacitySaving}
+                          className={`gap-1.5 rounded-xl ${
+                            capacityEditing
+                              ? "border-emerald-200 text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700"
+                              : "border-rose-200 text-rose-600 hover:bg-rose-50 hover:text-rose-700"
+                          }`}
+                        >
+                          {capacityEditing ? (
+                            <>
+                              <Save className="h-4 w-4" />
+                              {capacitySaving ? "Saving..." : "Save"}
+                            </>
+                          ) : (
+                            <>
+                              <Pencil className="h-3.5 w-3.5" />
+                              Edit
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                      {capacityEditing ? (
+                        <input
+                          type="number"
+                          min="1"
+                          step="1"
+                          value={capacityValue}
+                          onChange={(event) =>
+                            setCapacityValue(event.target.value)
+                          }
+                          className="mt-3 h-10 w-full rounded-xl border border-slate-200 px-3 text-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                        />
+                      ) : (
+                        <p className="mt-3 text-sm font-semibold text-slate-900">
+                          {displayValue(venue.capacity)} people
+                        </p>
+                      )}
+                      {capacityError && (
+                        <p className="mt-3 text-sm font-medium text-rose-600">
+                          {capacityError}
+                        </p>
+                      )}
+                      {successSection === "capacity" && successMessage && (
                         <p className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">
                           {successMessage}
                         </p>

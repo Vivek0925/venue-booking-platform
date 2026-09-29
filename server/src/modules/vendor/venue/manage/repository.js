@@ -58,7 +58,7 @@ WHERE status IN ('pending', 'rejected');`,
 
 export async function fetchVenue(vendorId, venueId) {
   const result = await pool.query(
-    `SELECT id, name, description, category, address, district, state, pincode, ST_Y(geo_loc::geometry) AS latitude, ST_X(geo_loc::geometry) AS longitude, has_cover_image, images, booking_type, opening_time, closing_time, status, suspension_reason, created_at FROM venues WHERE id = $1 AND vendor_id = $2`,
+    `SELECT id, name, description, category, address, district, state, pincode, capacity, ST_Y(geo_loc::geometry) AS latitude, ST_X(geo_loc::geometry) AS longitude, has_cover_image, images, booking_type, opening_time, closing_time, status, suspension_reason, created_at FROM venues WHERE id = $1 AND vendor_id = $2`,
     [venueId, vendorId]
   );
   return toCamelCase(result.rows[0]);
@@ -150,6 +150,21 @@ export async function updateVenueTime(
     RETURNING id
     `,
     [openingTime, closingTime, venueId, vendorId]
+  );
+
+  return toCamelCase(result.rows[0]);
+}
+
+export async function updateVenueCapacity(vendorId, venueId, capacity) {
+  const result = await pool.query(
+    `
+    UPDATE venues
+    SET capacity = $1
+    WHERE id = $2
+    AND vendor_id = $3
+    RETURNING capacity
+    `,
+    [capacity, venueId, vendorId]
   );
 
   return toCamelCase(result.rows[0]);

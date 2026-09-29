@@ -148,6 +148,7 @@ CREATE TABLE IF NOT EXISTS venues (
   state TEXT NOT NULL,
   pincode VARCHAR(6) NOT NULL,
   geo_loc GEOGRAPHY(Point, 4326) NOT NULL,
+  capacity INTEGER NOT NULL,
   has_cover_image BOOLEAN NOT NULL DEFAULT FALSE,
   images TEXT[] NOT NULL DEFAULT '{}' CHECK (cardinality(images) <= 10),
   booking_type booking_types,

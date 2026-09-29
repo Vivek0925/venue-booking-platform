@@ -114,6 +114,10 @@ export const hours = z
     path: ['closing_time'],
   });
 
+export const capacity = z.object({
+  capacity: z.number().int().positive('Capacity must be a positive integer'),
+});
+
 export const booking = z.discriminatedUnion('bookingType', [
   z.object({
     bookingType: z.literal('whole_day'),

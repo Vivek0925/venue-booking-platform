@@ -54,6 +54,13 @@ router.patch(
 );
 
 router.patch(
+  '/venues/:venueId/capacity',
+  validateSchema(schema.venueId, 'params'),
+  validateSchema(schema.capacity),
+  controller.updateVenueCapacity
+);
+
+router.patch(
   '/venues/:venueId/pricing',
   validateSchema(schema.venueId, 'params'),
   validateSchema(schema.booking),

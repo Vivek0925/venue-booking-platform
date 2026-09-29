@@ -69,6 +69,20 @@ export async function updateVenueHours(req, res) {
   });
 }
 
+export async function updateVenueCapacity(req, res) {
+  const data = await service.updateVenueCapacity(
+    req.vendor.id,
+    req.params.venueId,
+    req.body.capacity
+  );
+
+  res.status(200).json({
+    success: true,
+    message: 'Venue capacity updated successfully',
+    data: { capacity: data },
+  });
+}
+
 export async function updateVenuePricing(req, res) {
   await service.updateVenuePricing(req.vendor.id, req.params.venueId, req.body);
   res.status(200).json({

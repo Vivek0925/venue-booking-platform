@@ -44,6 +44,12 @@ export async function updateVenueHours(venueId, payload) {
   );
 }
 
+export async function updateVenueCapacity(venueId, capacity) {
+  return axiosInstance.patch(`/vendor/venues/${venueId}/capacity`, {
+    capacity,
+  });
+}
+
 export async function updateVenuePricing(venueId, payload) {
   return axiosInstance.patch(`/vendor/venues/${venueId}/pricing`, payload);
 }

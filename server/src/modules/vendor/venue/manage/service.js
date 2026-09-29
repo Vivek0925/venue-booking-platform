@@ -181,6 +181,20 @@ export async function updateVenueHours(vendorId, venueId, data) {
   return;
 }
 
+export async function updateVenueCapacity(vendorId, venueId, capacity) {
+  const updatedCapacity = await repository.updateVenueCapacity(
+    vendorId,
+    venueId,
+    capacity
+  );
+
+  if (updatedCapacity === null) {
+    throw new ApiError(ERROR_CONFIG.VENUE_NOT_FOUND);
+  }
+
+  return updatedCapacity;
+}
+
 export async function updateVenuePricing(vendorId, venueId, data) {
   return withTransaction(pool, async (client) => {
     const venue = await repository.updateBookingType(client, {
@@ -222,6 +236,13 @@ export async function updateVenueStatus(vendorId, venueId, status) {
     errors.push({
       field: 'description',
       message: 'Venue description is required',
+    });
+  }
+
+  if (!Number.isInteger(venue.capacity) || venue.capacity <= 0) {
+    errors.push({
+      field: 'capacity',
+      message: 'Venue capacity is required',
     });
   }
 
