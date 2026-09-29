@@ -56,7 +56,7 @@ export async function getVenuesApplication(vendorId, applicationId) {
 
   return {
     id: venue.id,
-    venueGroupId: venue.venue_application_group_id,
+    venueApplicationGroupId: venue.venue_application_group_id,
     name: venue.name,
     venueDetails: venue.venue_details,
     category: venue.category,

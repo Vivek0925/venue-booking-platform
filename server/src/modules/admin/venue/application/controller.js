@@ -27,6 +27,5 @@ export async function reviewApplication(req, res) {
   res.status(201).json({
     success: true,
     message: 'Application reviewed successfully',
-    data: data,
   });
 }

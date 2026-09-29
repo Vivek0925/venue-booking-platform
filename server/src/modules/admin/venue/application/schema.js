@@ -51,7 +51,6 @@ export const review = z
       if (data.status === 'rejected') {
         return !!data.rejectionReason;
       }
-
       return !data.rejectionReason;
     },
     {

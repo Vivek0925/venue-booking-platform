@@ -43,7 +43,7 @@ const schema = z.object({
 
   longitude: z.coerce.number().min(-180).max(180, 'Invalid longitude'),
 
-  venueGroupId: z
+  venueApplicationGroupId: z
     .string()
     .trim()
     .uuid({

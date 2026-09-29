@@ -1,12 +1,15 @@
 import { pool } from '../../../../infrastructure/database/db.js';
 import toCamelCase from '../../../../utils/camelcase.conversion.js';
 
-export async function findVenueGroupId(vendorId, venueGroupId) {
+export async function findVenueApplicationGroupId(
+  vendorId,
+  venueApplicationGroupId
+) {
   const result = await pool.query(
     `
   SELECT venue_application_group_id FROM venue_applications
   WHERE vendor_id = $1 AND venue_application_group_id = $2 AND status = 'rejected'`,
-    [vendorId, venueGroupId]
+    [vendorId, venueApplicationGroupId]
   );
   return toCamelCase(result.rows[0]);
 }
@@ -48,7 +51,7 @@ export async function insertIntoVenueApplications(data) {
     `,
     [
       data.vendorId,
-      data.venueGroupId,
+      data.venueApplicationGroupId,
       data.name,
       data.venueDetails,
       data.category,

@@ -6,7 +6,10 @@ import ApiError from '../../../../utils/api.error.js';
 import { deleteFromR2, uploadToR2 } from '../../../../utils/r2.storage.js';
 import { withTransaction } from '../../../../utils/transaction.js';
 import ERROR_CONFIG from './error.config.js';
-import { findVenueGroupId, insertIntoVenueApplications } from './repository.js';
+import {
+  findVenueApplicationGroupId,
+  insertIntoVenueApplications,
+} from './repository.js';
 
 export async function submitApplication(vendorId, data, files) {
   const proofDocument = files.proofDocument[0];
@@ -35,21 +38,26 @@ export async function submitApplication(vendorId, data, files) {
       )
     );
 
-    let venueGroupId;
-    if (data.venueGroupId) {
-      const result = await findVenueGroupId(vendorId, data.venueGroupId);
-      if (!result || !result.venueGroupId) {
+    let venueApplicationGroupId;
+    if (data.venueApplicationGroupId) {
+      const result = await findVenueApplicationGroupId(
+        vendorId,
+        data.venueApplicationGroupId
+      );
+
+      if (!result || !result.venueApplicationGroupId) {
         throw new ApiError(ERROR_CONFIG.NO_EXISTING_VENUE_FOUND);
       }
-      venueGroupId = result.venueGroupId;
+
+      venueApplicationGroupId = result.venueApplicationGroupId;
     } else {
-      venueGroupId = randomUUID();
+      venueApplicationGroupId = randomUUID();
     }
 
     return insertIntoVenueApplications({
       ...data,
       vendorId,
-      venueGroupId,
+      venueApplicationGroupId,
       images: venueImagesKeys,
       proofDocumentKey,
       coverImageKey,

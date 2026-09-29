@@ -204,7 +204,7 @@ function ResubmitForm({ application, onCancel, onSuccess }) {
       const payload = new FormData();
       Object.entries({
         ...formData,
-        venueGroupId: application.venueGroupId,
+        venueApplicationGroupId: application.venueApplicationGroupId,
       }).forEach(([key, value]) => payload.append(key, value));
       venueImages.forEach((file) => payload.append("venueImages", file));
       payload.append("coverImage", coverImage);
