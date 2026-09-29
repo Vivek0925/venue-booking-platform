@@ -194,7 +194,7 @@ export default function VenueManagementPage() {
       setPricingRows(
         venueData?.pricing?.length
           ? venueData.pricing.map((item) => ({
-              day_type: item.day_type,
+              day_type: item.dayType ?? item.day_type,
               duration_minutes: bookingType === "time_slot" ? 60 : null,
               price: item.price ?? "",
             }))
@@ -216,7 +216,7 @@ export default function VenueManagementPage() {
   function handleGalleryFiles(event) {
     const files = Array.from(event.target.files ?? []);
     const existingCount =
-      (venue?.imageUrls?.length ?? 0) -
+      (venue?.images?.length ?? 0) -
       removedGalleryIndexes.length +
       galleryFiles.length;
     const availableSlots = 10 - existingCount;
@@ -250,7 +250,7 @@ export default function VenueManagementPage() {
 
   async function saveGallery() {
     const deleteIds = removedGalleryIndexes.map((index) =>
-      getGalleryImageId(venue?.imageUrls?.[index]),
+      getGalleryImageId(venue?.images?.[index]),
     );
 
     if (deleteIds.some((id) => !id)) {
@@ -567,9 +567,9 @@ export default function VenueManagementPage() {
                   {successMessage}
                 </p>
               )}
-              {venue.imageUrls?.length || galleryFiles.length ? (
+              {venue.images?.length || galleryFiles.length ? (
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5">
-                  {venue.imageUrls?.map((url, index) => {
+                  {venue.images?.map((url, index) => {
                     if (removedGalleryIndexes.includes(index)) return null;
 
                     return (
@@ -618,7 +618,7 @@ export default function VenueManagementPage() {
                     </div>
                   ))}
                   {isEditingGallery &&
-                    (venue.imageUrls?.length ?? 0) -
+                    (venue.images?.length ?? 0) -
                       removedGalleryIndexes.length +
                       galleryFiles.length <
                       10 && (
@@ -649,7 +649,7 @@ export default function VenueManagementPage() {
                 </div>
               )}
               <p className="mt-4 text-xs text-slate-400">
-                {(venue.imageUrls?.length ?? 0) -
+                {(venue.images?.length ?? 0) -
                   removedGalleryIndexes.length +
                   galleryFiles.length}
                 /10 images. Changes are preview-only until connected to the API.

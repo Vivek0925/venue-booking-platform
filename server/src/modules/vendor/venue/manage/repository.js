@@ -61,7 +61,18 @@ export async function fetchVenue(vendorId, venueId) {
     `SELECT id, name, description, category, address, district, state, pincode, ST_Y(geo_loc::geometry) AS latitude, ST_X(geo_loc::geometry) AS longitude, has_cover_image, images, booking_type, opening_time, closing_time, status, suspension_reason, created_at FROM venues WHERE id = $1 AND vendor_id = $2`,
     [venueId, vendorId]
   );
-  return result.rows[0] ?? null;
+  return toCamelCase(result.rows[0]);
+}
+
+export async function getVenuePricing(venueId) {
+  const result = await pool.query(
+    `
+    SELECT day_type, duration_minutes, price 
+    FROM venue_pricing 
+    WHERE venue_id = $1`,
+    [venueId]
+  );
+  return result.rows.map(toCamelCase);
 }
 
 export async function fetchReverificationApplication(venueId) {
@@ -213,16 +224,6 @@ export async function updateVenueStatus(vendorId, venueId, status) {
     [status, venueId, vendorId]
   );
   return result.rows[0]?.id ?? null;
-}
-
-export async function getVenuePricing(venueId) {
-  const result = await pool.query(
-    `
-    SELECT * FROM venue_pricing WHERE venue_id = $1`,
-    [venueId]
-  );
-
-  return result.rows;
 }
 
 export async function insertIntoVenueReverification(client, data) {

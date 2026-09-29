@@ -63,50 +63,13 @@ export async function getVenueDetails(vendorId, venueId) {
     throw new ApiError(ERROR_CONFIG.VENUE_NOT_FOUND);
   }
 
-  const reverification =
-    await repository.fetchReverificationApplication(venueId);
-
-  const coverImageId = `venues/${vendorId}/${venueId}/cover_image`;
-  const [coverImage] = await getFromCloudinary([coverImageId]);
-  const imageUrls = await getFromCloudinary(venue.images ?? []);
   const pricing = await repository.getVenuePricing(venueId);
 
-  return {
-    venue: {
-      id: venue.id,
-      name: venue.name,
-      description: venue.description,
-      address: venue.address,
-      category: venue.category,
-      district: venue.district,
-      state: venue.state,
-      pincode: venue.pincode,
-      latitude: venue.latitude,
-      longitude: venue.longitude,
-      bookingType: venue.booking_type,
-      openingTime: venue.opening_time,
-      closingTime: venue.closing_time,
-      pricing,
-      status: venue.status,
-      suspensionReason: venue.suspension_reason,
-      createdAt: venue.created_at,
-      coverImage: venue.has_cover_image ? coverImage : null,
-      imageUrls: imageUrls,
-    },
-    reverification: {
-      id: reverification?.id ?? null,
-      category: reverification?.category ?? null,
-      address: reverification?.address ?? null,
-      district: reverification?.district ?? null,
-      state: reverification?.state ?? null,
-      pincode: reverification?.pincode ?? null,
-      latitude: reverification?.latitude ?? null,
-      longitude: reverification?.longitude ?? null,
-      status: reverification?.status ?? null,
-      rejectionReason: reverification?.rejection_reason ?? null,
-      submittedAt: reverification?.submitted_at ?? null,
-    },
-  };
+  const coverImageKey = `venues/${vendorId}/${venueId}/cover_image`;
+  const [coverImage] = await getFromCloudinary([coverImageKey]);
+  const images = await getFromCloudinary(venue.images);
+
+  return { venue: { ...venue, coverImage, images }, pricing };
 }
 
 export async function uploadCoverImage(vendorId, venueId, file) {
@@ -267,7 +230,7 @@ export async function updateVenueStatus(vendorId, venueId, status) {
     });
   }
 
-  if (!venue.has_cover_image) {
+  if (!venue.hasCoverImage) {
     errors.push({
       field: 'cover_image',
       message: 'Cover image is required',
@@ -281,14 +244,14 @@ export async function updateVenueStatus(vendorId, venueId, status) {
     });
   }
 
-  if (!venue.booking_type) {
+  if (!venue.bookingType) {
     errors.push({
       field: 'booking_type',
       message: 'Booking type is required',
     });
   }
 
-  if (!venue.opening_time || !venue.closing_time) {
+  if (!venue.openingTime || !venue.closingTime) {
     errors.push({
       field: 'opening_time & closing_time',
       message: 'Opening and closing time is required',
@@ -303,8 +266,8 @@ export async function updateVenueStatus(vendorId, venueId, status) {
   }
 
   const pricing = await repository.getVenuePricing(venueId);
-  if (venue.booking_type === 'whole_day') {
-    const dayTypes = new Set(pricing.map((item) => item.day_type));
+  if (venue.bookingType === 'whole_day') {
+    const dayTypes = new Set(pricing.map((item) => item.dayType));
 
     if (!dayTypes.has('weekday')) {
       errors.push({
@@ -320,9 +283,9 @@ export async function updateVenueStatus(vendorId, venueId, status) {
       });
     }
   }
-  if (venue.booking_type == 'time_slot') {
+  if (venue.bookingType == 'time_slot') {
     for (const price of pricing) {
-      if (!price.duration_minutes) {
+      if (!price.durationMinutes) {
         errors.push({
           field: 'duration_minutes',
           message: 'Duration minutes is required for everyday',
