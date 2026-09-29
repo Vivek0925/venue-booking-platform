@@ -9,6 +9,7 @@ import {
   Loader2,
   AlertTriangle,
   ExternalLink,
+  Eye,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -105,18 +106,17 @@ function formatDateTime(iso) {
   }
 }
 
-function DocumentLink({ url }) {
+function DocumentButton({ url, onClick }) {
   if (!url) return <span className="text-sm text-slate-400">—</span>;
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noreferrer"
-      className="inline-flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-700"
+    <button
+      type="button"
+      onClick={() => onClick(url)}
+      className="inline-flex items-center gap-1 text-sm font-medium text-indigo-600 hover:text-indigo-700 cursor-pointer"
     >
-      <FileText className="h-3.5 w-3.5" />
+      <Eye className="h-3.5 w-3.5" />
       View
-    </a>
+    </button>
   );
 }
 
@@ -139,6 +139,9 @@ export default function VendorApplicationsTable({
   const [rejectTarget, setRejectTarget] = useState(null);
   const [rejectReason, setRejectReason] = useState("");
   const [rejectError, setRejectError] = useState(null);
+
+  // Document preview modal state
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -334,7 +337,7 @@ export default function VendorApplicationsTable({
                   )}
 
                   <TableCell>
-                    <DocumentLink url={row.panDocumentUrl} />
+                    <DocumentButton url={row.panDocument} onClick={setPreviewUrl} />
                   </TableCell>
 
                   {status === "pending" && (
@@ -441,6 +444,39 @@ export default function VendorApplicationsTable({
               Reject application
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Document preview modal */}
+      <Dialog
+        open={!!previewUrl}
+        onOpenChange={(open) => !open && setPreviewUrl(null)}
+      >
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>PAN Document</DialogTitle>
+            <DialogDescription>Preview of the uploaded PAN document.</DialogDescription>
+          </DialogHeader>
+          {previewUrl && (
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-full overflow-hidden rounded-lg border border-slate-200">
+                <img
+                  src={previewUrl}
+                  alt="PAN Document"
+                  className="h-auto w-full object-contain"
+                />
+              </div>
+              <a
+                href={previewUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-indigo-600 hover:text-indigo-700"
+              >
+                <ExternalLink className="h-3.5 w-3.5" />
+                Open in new tab
+              </a>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </div>
