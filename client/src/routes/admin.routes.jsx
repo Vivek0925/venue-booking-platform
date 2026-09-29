@@ -41,6 +41,10 @@ export const adminRoutes = [
         ],
       },
       {
+        path: "vendor/profile/application/:applicationId",
+        element: <VendorProfilePage />,
+      },
+      {
         path: "vendor/profile/:id",
         element: <VendorProfilePage />,
       },

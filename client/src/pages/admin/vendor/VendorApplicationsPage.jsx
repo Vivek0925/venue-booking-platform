@@ -11,7 +11,7 @@ export default function VendorApplicationsPage() {
   const status = searchParams.get("status") || "pending";
 
   const handleViewProfile = (row) => {
-    navigate(`/admin/vendor/profile/${row.id}`);
+    navigate(`/admin/vendor/profile/application/${row.id}`);
   };
 
   return (

@@ -1,7 +1,7 @@
 import pool from '../../../../infrastructure/database/db.js';
 import toCamelCase from '../../../../utils/camelcase.conversion.js';
 
-export async function fetchVenodrProfileByApplicationId(userId) {
+export async function fetchVendorProfileByApplicationId(applicationId) {
   const result = await pool.query(
     `SELECT
        vp.id,
@@ -16,9 +16,9 @@ export async function fetchVenodrProfileByApplicationId(userId) {
        u.status AS account_status
      FROM vendor_profiles vp
      JOIN users u ON u.id = vp.user_id
-     WHERE vp.user_id = $1
+     WHERE vp.application_id = $1
      LIMIT 1`,
-    [userId]
+    [applicationId]
   );
 
   return toCamelCase(result.rows[0]);

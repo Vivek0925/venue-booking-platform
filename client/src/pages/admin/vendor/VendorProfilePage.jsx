@@ -20,7 +20,10 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
 // Replace with your actual API import path
-import { getVendorProfileByVendorId } from "@/api/admin.api";
+import {
+  getVendorProfileByVendorId,
+  getVendorProfileByApplicationId,
+} from "@/api/admin.api";
 
 // --- UTILITIES ---
 function formatDateTime(iso) {
@@ -121,7 +124,7 @@ function ProfileSkeleton() {
 
 // --- MAIN COMPONENT ---
 export default function VendorProfilePage() {
-  const { id } = useParams();
+  const { id, applicationId } = useParams();
   const navigate = useNavigate();
   const [vendor, setVendor] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -134,7 +137,9 @@ export default function VendorProfilePage() {
       setLoading(true);
       setError(null);
       try {
-        const response = await getVendorProfileByVendorId(id);
+        const response = applicationId
+          ? await getVendorProfileByApplicationId(applicationId)
+          : await getVendorProfileByVendorId(id);
         const data = response?.data || response; // Handle different axios response shapes
 
         if (isMounted) setVendor(data);
@@ -148,11 +153,11 @@ export default function VendorProfilePage() {
       }
     }
 
-    if (id) loadProfile();
+    if (id || applicationId) loadProfile();
     return () => {
       isMounted = false;
     };
-  }, [id]);
+  }, [id, applicationId]);
 
   if (loading) {
     return <ProfileSkeleton />;

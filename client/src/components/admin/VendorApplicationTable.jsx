@@ -3,7 +3,6 @@ import {
   Clock3,
   CircleCheck,
   CircleX,
-  FileText,
   Check,
   X,
   Loader2,
@@ -337,7 +336,10 @@ export default function VendorApplicationsTable({
                   )}
 
                   <TableCell>
-                    <DocumentButton url={row.panDocument} onClick={setPreviewUrl} />
+                    <DocumentButton
+                      url={row.panDocument}
+                      onClick={setPreviewUrl}
+                    />
                   </TableCell>
 
                   {status === "pending" && (
@@ -455,7 +457,9 @@ export default function VendorApplicationsTable({
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
             <DialogTitle>PAN Document</DialogTitle>
-            <DialogDescription>Preview of the uploaded PAN document.</DialogDescription>
+            <DialogDescription>
+              Preview of the uploaded PAN document.
+            </DialogDescription>
           </DialogHeader>
           {previewUrl && (
             <div className="flex flex-col items-center gap-4">

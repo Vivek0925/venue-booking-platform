@@ -5,8 +5,7 @@ import { PROFILE_ERROR_CONFIG } from './error.config.js';
 import * as repository from './repository.js';
 
 export async function getVendorProfileByApplicationId(applicationId) {
-  const vendor = await repository.fetchVenodrProfileByApplicationId(
-    pool,
+  const vendor = await repository.fetchVendorProfileByApplicationId(
     applicationId
   );
 
