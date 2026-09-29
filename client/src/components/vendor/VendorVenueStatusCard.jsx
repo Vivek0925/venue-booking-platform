@@ -121,9 +121,9 @@ function SummaryCard({ application, onClick }) {
       className="group cursor-pointer overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/5"
     >
       <div className="relative aspect-3/4 overflow-hidden bg-slate-100">
-        {application.coverImageUrl ? (
+        {application.coverImage ? (
           <img
-            src={application.coverImageUrl}
+            src={application.coverImage}
             alt={application.name}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
@@ -174,9 +174,9 @@ function VenueCard({ venue, onClick }) {
       className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-indigo-300 hover:shadow-xl hover:shadow-indigo-500/5"
     >
       <div className="relative aspect-3/4 w-full overflow-hidden bg-slate-100">
-        {venue.coverImageUrl ? (
+        {venue.coverImage ? (
           <img
-            src={venue.coverImageUrl}
+            src={venue.coverImage}
             alt={venue.name}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />

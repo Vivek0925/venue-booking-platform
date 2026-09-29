@@ -1,34 +1,13 @@
 import { useEffect, useState, useMemo } from "react";
-import {
-  Clock3,
-  CheckCircle2,
-  XCircle,
-  AlertTriangle,
-  Building2,
-  MapPin,
-  Filter,
-  Search,
-} from "lucide-react";
+import { AlertTriangle, Filter, Search } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
+import {
+  VenueGridCardSkeleton,
+  default as VenueGridCard,
+} from "@/components/venue/VenueGridCard";
 import { getVenueApplications } from "@/api/admin.api";
 import { useNavigate, useSearchParams } from "react-router-dom";
-
-function formatDateTime(iso) {
-  if (!iso) return "—";
-  try {
-    return new Intl.DateTimeFormat("en-IN", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    }).format(new Date(iso));
-  } catch {
-    return "—";
-  }
-}
 
 const STATUS_CONFIG = {
   pending: {
@@ -36,110 +15,20 @@ const STATUS_CONFIG = {
     badgeClass: "bg-amber-500/90 text-white backdrop-blur-md",
     countBadgeClass: "bg-amber-50 text-amber-700",
     countBadgeHoverClass: "hover:bg-amber-100",
-    icon: Clock3,
   },
   approved: {
     label: "Approved",
     badgeClass: "bg-emerald-500/90 text-white backdrop-blur-md",
     countBadgeClass: "bg-emerald-50 text-emerald-700",
     countBadgeHoverClass: "hover:bg-emerald-100",
-    icon: CheckCircle2,
   },
   rejected: {
     label: "Rejected",
     badgeClass: "bg-rose-500/90 text-white backdrop-blur-md",
     countBadgeClass: "bg-rose-50 text-rose-700",
     countBadgeHoverClass: "hover:bg-rose-100",
-    icon: XCircle,
   },
 };
-
-// --- SUB-COMPONENTS ---
-
-function ApplicationGridCard({ app, onAction }) {
-  const {
-    id,
-    name,
-    category,
-    coverImage,
-    district,
-    state,
-    status,
-    submittedAt,
-  } = app;
-
-  const [imgFailed, setImgFailed] = useState(false);
-  const cfg = STATUS_CONFIG[status] || STATUS_CONFIG.pending;
-
-  return (
-    <div
-      onClick={() => onAction(id)}
-      className="group flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-md"
-    >
-      {/* Tall Portrait Image Container */}
-      <div className="relative aspect-4/5 w-full overflow-hidden bg-slate-100">
-        {coverImage && !imgFailed ? (
-          <img
-            src={coverImage}
-            alt={name}
-            onError={() => setImgFailed(true)}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-linear-to-br from-slate-100 to-slate-200">
-            <Building2 className="h-10 w-10 text-slate-300 transition-transform duration-500 group-hover:scale-110" />
-          </div>
-        )}
-
-        {/* Floating Badges inside the image */}
-        <div className="absolute left-3 top-3 flex flex-col gap-1.5 items-start">
-          <Badge
-            className={`border-0 px-2 py-0.5 text-[10px] font-semibold tracking-wider ${cfg.badgeClass}`}
-          >
-            {cfg.label}
-          </Badge>
-          <Badge className="border-0 bg-black/60 px-2 py-0.5 text-[10px] font-semibold tracking-wider text-white backdrop-blur-md uppercase">
-            {category}
-          </Badge>
-        </div>
-
-        {/* Gradient overlay for better contrast at the bottom if needed */}
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      </div>
-
-      {/* Text Details (Outside Image) */}
-      <div className="flex flex-col p-4">
-        <div className="flex items-center gap-1 text-[11px] font-medium text-slate-500">
-          <MapPin className="h-3 w-3 shrink-0 text-indigo-500" />
-          <span className="truncate">
-            {district}, {state}
-          </span>
-        </div>
-
-        <h3 className="mt-1 line-clamp-2 text-sm font-bold leading-snug text-slate-900 transition-colors">
-          {name}
-        </h3>
-
-        <p className="mt-1 text-[11px] font-medium text-slate-400">
-          Submitted: {formatDateTime(submittedAt)}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function ApplicationSkeleton() {
-  return (
-    <div className="flex flex-col">
-      <Skeleton className="aspect-4/5 w-full rounded-2xl" />
-      <div className="mt-3 space-y-2 px-0.5">
-        <Skeleton className="h-3 w-1/2" />
-        <Skeleton className="h-4 w-full" />
-        <Skeleton className="h-3 w-2/3" />
-      </div>
-    </div>
-  );
-}
 
 // --- MAIN PAGE COMPONENT ---
 
@@ -236,7 +125,7 @@ export default function VenueApplicationsStatusPage() {
         {loading ? (
           <>
             {Array.from({ length: 5 }).map((_, i) => (
-              <ApplicationSkeleton key={i} />
+              <VenueGridCardSkeleton key={i} />
             ))}
           </>
         ) : filteredApps.length === 0 ? (
@@ -254,10 +143,10 @@ export default function VenueApplicationsStatusPage() {
           </div>
         ) : (
           filteredApps.map((app) => (
-            <ApplicationGridCard
+            <VenueGridCard
               key={app.id}
-              app={app}
-              onAction={handleActionClick}
+              venue={app}
+              onClick={() => handleActionClick(app.id)}
             />
           ))
         )}

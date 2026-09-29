@@ -1,4 +1,5 @@
 import pool from '../../../../infrastructure/database/db.js';
+import toCamelCase from '../../../../utils/camelcase.conversion.js';
 
 export async function featchVenues(vendorId) {
   const result = await pool.query(
@@ -27,11 +28,11 @@ FROM (
     FROM venue_applications
     WHERE vendor_id = $1
     ORDER BY venue_application_group_id, submitted_at DESC
-) latest
+) latest_venue_applications
 WHERE status IN ('pending', 'rejected');`,
     [vendorId]
   );
-  return result.rows;
+  return result.rows.map((row) => toCamelCase(row));
 }
 
 export async function fetchVenueApplication(vendorId, applicationId) {

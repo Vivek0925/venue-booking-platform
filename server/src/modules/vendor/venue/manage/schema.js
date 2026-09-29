@@ -3,9 +3,20 @@ import { z } from 'zod';
 const reverificationSchema = z.object({
   name: z.string().trim().min(1, 'Venue name is required'),
 
-  category: z.enum(['waterpark', 'amusement_park', 'playzone'], {
-    message: 'Allowed category are waterpark, amusement_park or playzone',
-  }),
+  category: z.enum(
+    [
+      'waterpark',
+      'amusement_park',
+      'gaming_zone',
+      'playzone',
+      'racing_zone',
+      'trampoline_park',
+    ],
+    {
+      message:
+        'Allowed category are waterpark, amusement_park, gaming_zone, playzone, racing_zone or trampoline_park',
+    }
+  ),
 
   address: z.string().trim().min(5, 'Full address is required'),
 
@@ -32,7 +43,7 @@ const timeSchema = z
 
 const wholeDayPricingSchema = z.object({
   day_type: z.enum(['weekday', 'weekend']),
-  price: z.number().int().positive(),
+  price: z.number().int().min(0, 'Price must be a positive number or zero'),
 });
 
 const timeSlotPricingSchema = z.object({
@@ -43,7 +54,7 @@ const timeSlotPricingSchema = z.object({
     .refine((value) => [60].includes(value), {
       message: 'Invalid duration time',
     }),
-  price: z.number().int().positive(),
+  price: z.number().int().min(0, 'Price must be a positive number or zero'),
 });
 
 export const applicationId = z.object({

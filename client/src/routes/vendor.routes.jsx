@@ -9,7 +9,7 @@ import VendorProfilePage from "@/pages/vendor/VendorProfilePage";
 import NewVenueAppllicationPage from "@/pages/vendor/venue/NewVenueApplicationPage";
 import VenueManagementPage from "@/pages/vendor/venue/VenueManagementPage";
 import ReviewVenueApplicationPage from "@/pages/vendor/venue/ReviewVenueApplicationPage";
-import VendorVenuesPage from "@/pages/vendor/VendorVenuesStatusPage";
+import VendorVenuesPage from "@/pages/vendor/venue/VenuesStatusPage";
 
 export const vendorRoutes = [
   {

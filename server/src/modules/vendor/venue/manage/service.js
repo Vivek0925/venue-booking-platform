@@ -16,30 +16,22 @@ export async function getVenues(vendorId) {
   const result = await repository.featchVenues(vendorId);
   const venues = await Promise.all(
     result.map(async (venue) => {
-      const coverImageId = `venues/${vendorId}/${venue.id}/cover_image`;
+      const coverImageKey = `venues/${vendorId}/${venue.id}/cover_image`;
       return {
-        id: venue.id,
-        name: venue.name,
-        category: venue.category,
-        district: venue.district,
-        state: venue.state,
-        coverImageUrl: (await getFromCloudinary([coverImageId]))[0],
-        status: venue.status,
+        ...venue,
+        coverImage: (await getFromCloudinary([coverImageKey]))[0],
       };
     })
   );
   const applications = await repository.fetchVenuesApplicationStatus(vendorId);
   const venueApplications = await Promise.all(
-    applications.map(async (application) => ({
-      id: application.id,
-      name: application.name,
-      category: application.category,
-      district: application.district,
-      state: application.state,
-      status: application.status,
-      coverImageUrl: (await getPrivateUrl([application.cover_image_key]))[0],
-      submittedAt: application.submitted_at,
-    }))
+    applications.map(async (application) => {
+      const { coverImageKey, ...data } = application;
+      return {
+        ...data,
+        coverImage: (await getPrivateUrl([application.coverImageKey]))[0],
+      };
+    })
   );
   return {
     venues,
