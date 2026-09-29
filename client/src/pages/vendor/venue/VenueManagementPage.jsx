@@ -839,40 +839,7 @@ export default function VenueManagementPage() {
                   )}
                 </SectionCard>
 
-                <SectionCard
-                  title="Operating Info"
-                  action={
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        if (hoursEditing) {
-                          void saveHours();
-                        } else {
-                          setHoursEditing(true);
-                        }
-                      }}
-                      disabled={hoursSaving}
-                      className={`gap-1.5 rounded-xl ${
-                        hoursEditing
-                          ? "border-emerald-200 text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700"
-                          : "border-rose-200 text-rose-600 hover:bg-rose-50 hover:text-rose-700"
-                      }`}
-                    >
-                      {hoursEditing ? (
-                        <>
-                          <Save className="h-4 w-4" />
-                          {hoursSaving ? "Saving..." : "Save"}
-                        </>
-                      ) : (
-                        <>
-                          <Pencil className="h-3.5 w-3.5" />
-                          Edit
-                        </>
-                      )}
-                    </Button>
-                  }
-                >
+                <SectionCard title="Operating Info">
                   <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     <div className="rounded-2xl border border-slate-200 p-5">
                       <div className="flex items-center justify-between">
@@ -880,6 +847,35 @@ export default function VenueManagementPage() {
                           <Clock3 className="h-4 w-4 text-indigo-500" />
                           Opening & Closing Time
                         </p>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            if (hoursEditing) {
+                              void saveHours();
+                            } else {
+                              setHoursEditing(true);
+                            }
+                          }}
+                          disabled={hoursSaving}
+                          className={`gap-1.5 rounded-xl ${
+                            hoursEditing
+                              ? "border-emerald-200 text-emerald-600 hover:bg-emerald-50 hover:text-emerald-700"
+                              : "border-rose-200 text-rose-600 hover:bg-rose-50 hover:text-rose-700"
+                          }`}
+                        >
+                          {hoursEditing ? (
+                            <>
+                              <Save className="h-4 w-4" />
+                              {hoursSaving ? "Saving..." : "Save"}
+                            </>
+                          ) : (
+                            <>
+                              <Pencil className="h-3.5 w-3.5" />
+                              Edit
+                            </>
+                          )}
+                        </Button>
                       </div>
                       {hoursEditing ? (
                         <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
