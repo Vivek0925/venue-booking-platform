@@ -94,30 +94,29 @@ function SiteHeader({ location, onLocationChange }) {
 
   return (
     <>
-      <header className="sticky top-0 z-50 w-full border-b bg-white">
-        <div className="flex h-16 w-full items-center gap-4 px-4 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-50 w-full border-b border-[#eee5f2] bg-[#fffdfd]/95 backdrop-blur">
+        <div className="mx-auto flex h-[62px] w-full max-w-[1200px] items-center gap-4 px-4 sm:px-6 lg:gap-5 lg:px-7">
           <a href="/" aria-label="Venuz home" className="shrink-0">
-            <span className="inline-flex items-center gap-2">
-              <img src={Logo} alt="Venuz" className="h-9 w-9" />
-              <span className="text-xl font-bold tracking-tight text-slate-800">
+            <span className="inline-flex items-center gap-2.5">
+              <img src={Logo} alt="Venuz" className="h-8 w-8" />
+              <span className="text-[18px] font-bold tracking-[-0.03em] text-[#281b30]">
                 Venuez
               </span>
             </span>
           </a>
 
-          <Separator orientation="vertical" className="hidden h-8 sm:block" />
+          <Separator orientation="vertical" className="hidden h-7 lg:block" />
 
-          {/* City picker */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="group hidden items-center gap-2 rounded-md px-1 py-1 text-left sm:flex">
-                <MapPin className="h-5 w-5 text-violet-600" />
+                <MapPin className="h-[18px] w-[18px] text-[#9c55ad]" />
                 <span className="leading-tight">
-                  <span className="flex items-center gap-1 text-[15px] font-semibold">
+                  <span className="flex items-center gap-1 text-[15px] font-semibold text-[#33243b]">
                     {location.city}
                     <ChevronDown className="h-3.5 w-3.5 opacity-50 transition group-data-[state=open]:rotate-180" />
                   </span>
-                  <span className="block text-xs text-muted-foreground">
+                  <span className="block text-[10px] text-[#8b7c91]">
                     {location.state}
                   </span>
                 </span>
@@ -143,9 +142,32 @@ function SiteHeader({ location, onLocationChange }) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="ml-auto flex items-center gap-1">
-            <Button variant="ghost" size="icon">
-              <Search className="h-5 w-5 text-violet-600" />
+          <nav className="hidden h-full items-center justify-center gap-6 lg:flex lg:flex-1">
+            {[
+              { label: "Explore", href: "/" },
+              { label: "Events", href: "/" },
+              { label: "Weddings", href: "/" },
+              { label: "Sports", href: "/" },
+              { label: "Restaurants", href: "/" },
+              { label: "List your venue", href: "/partner-with-us" },
+            ].map((item, index) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className={`relative flex h-full items-center whitespace-nowrap pt-px text-[15px] font-semibold transition hover:text-[#48245e] ${index === 0 ? "text-[#48245e] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#b55bc4]" : "text-[#8a7891]"}`}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="ml-auto flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 rounded-full hover:bg-[#f4e8f8]"
+            >
+              <Search className="h-[18px] w-[18px] text-[#8a3cff]" />
             </Button>
 
             <DropdownMenu>
@@ -154,7 +176,7 @@ function SiteHeader({ location, onLocationChange }) {
                   variant="ghost"
                   size="icon"
                   aria-label="Account"
-                  className="rounded-full bg-muted p-0"
+                  className="h-9 w-9 rounded-full bg-[#f0e2ff] p-0 hover:bg-[#e8d5ff]"
                 >
                   {user ? (
                     <UserAvatar email={user.email} />
@@ -236,8 +258,8 @@ function SiteHeader({ location, onLocationChange }) {
 
 function SiteFooter() {
   return (
-    <footer className="w-full bg-neutral-900 text-neutral-100">
-      <div className="w-full px-6 py-20 sm:px-8 lg:px-12">
+    <footer className="w-full border-t border-neutral-800 bg-black text-neutral-100">
+      <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-[1fr_auto_1fr] md:items-center">
           <a
             href="/"
@@ -245,7 +267,9 @@ function SiteFooter() {
             className="flex items-center justify-center gap-3 md:justify-self-start"
           >
             <img src={Logo} alt="Venuz" className="h-10 w-10" />
-            <span className="text-2xl font-bold tracking-tight">Venuez</span>
+            <span className="text-2xl font-bold tracking-tight text-white">
+              Venuez
+            </span>
           </a>
 
           <nav className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm font-medium">
@@ -253,7 +277,7 @@ function SiteFooter() {
               <a
                 key={l.label}
                 href={l.href}
-                className="text-neutral-200 transition hover:text-white"
+                className="text-neutral-300 transition hover:text-white"
               >
                 {l.label}
               </a>
@@ -271,7 +295,6 @@ function SiteFooter() {
               <a
                 key={label}
                 href={href}
-                aria-label={label}
                 className="text-neutral-300 transition hover:text-white"
               >
                 <Icon className="h-5 w-5" />
@@ -280,8 +303,7 @@ function SiteFooter() {
           </div>
         </div>
 
-        <Separator className="my-8 bg-neutral-700" />
-
+        <Separator className="my-8 bg-neutral-800" />
         <p className="text-center text-xs leading-relaxed text-neutral-400">
           By using this site you agree to our Terms of Service, Cookie Policy,
           Privacy Policy and Content Guidelines. All rights reserved.
