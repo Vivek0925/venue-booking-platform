@@ -91,13 +91,14 @@ export default function NewVenueAppllicationPage() {
       ["image/jpeg", "image/png"].includes(file.type),
     );
 
-    if (venueImages.length + validFiles.length > 5) {
-      setError("You can upload a maximum of 5 venue images.");
-      return;
-    }
+    const newImages = [...venueImages, ...validFiles].slice(0, 5);
+    setVenueImages(newImages);
 
-    setVenueImages((prev) => [...prev, ...validFiles].slice(0, 5));
-    setError(null);
+    if (venueImages.length + validFiles.length > 5) {
+      setError("Maximum 5 venue images allowed. Extra images were discarded.");
+    } else {
+      setError(null);
+    }
   };
 
   const removeVenueImage = (index) => {
