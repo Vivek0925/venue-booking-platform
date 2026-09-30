@@ -132,7 +132,7 @@ function Calendar({
         )}
       </div>
 
-      <div className="mt-4 grid grid-cols-7 gap-y-3 gap-x-1 text-center">
+      <div className="mt-3 grid grid-cols-7 gap-x-0.5 gap-y-1 text-center sm:mt-4 sm:gap-x-1 sm:gap-y-3">
         {WEEKDAYS.map((w) => (
           <span key={w} className="text-xs font-medium text-neutral-400">
             {w}
@@ -151,7 +151,7 @@ function Calendar({
               key={date.toISOString()}
               disabled={disabled}
               onClick={() => onSelect(date)}
-              className={`flex flex-col items-center justify-center gap-0.5 rounded-xl py-2 text-sm transition ${
+              className={`flex flex-col items-center justify-center gap-0.5 rounded-lg py-1.5 text-sm transition sm:rounded-xl sm:py-2 ${
                 disabled
                   ? "cursor-not-allowed text-neutral-300"
                   : isSelected
@@ -162,7 +162,7 @@ function Calendar({
               <span>{date.getDate()}</span>
               {price != null && (
                 <span
-                  className={`text-[11px] ${
+                  className={`text-[10px] sm:text-[11px] ${
                     isSelected ? "text-violet-500" : "text-neutral-400"
                   }`}
                 >
@@ -329,11 +329,11 @@ export default function VenuePricingPage({
 
       <DialogContent
         showCloseButton={false}
-        className={`gap-0 rounded-2xl border-[#E7DBEF] p-0 shadow-[0_16px_50px_rgba(73,34,91,0.16)] ${
+        className={`max-h-[calc(100vh-1rem)] gap-0 overflow-y-auto rounded-2xl border-[#E7DBEF] p-0 shadow-[0_16px_50px_rgba(73,34,91,0.16)] ${
           mode === "slot" ? "sm:max-w-4xl" : "sm:max-w-sm"
         }`}
       >
-        <div className="flex items-center justify-between border-b border-[#F0E6F3] px-6 py-5">
+        <div className="flex items-center justify-between border-b border-[#F0E6F3] px-5 py-4 sm:px-6 sm:py-5">
           <DialogTitle className="text-lg font-bold tracking-[-0.02em] text-[#49225B]">
             When would you like to visit?
           </DialogTitle>
@@ -343,7 +343,7 @@ export default function VenuePricingPage({
         </div>
 
         <div
-          className={`grid gap-6 px-6 py-6 ${
+          className={`grid gap-4 px-5 py-4 sm:gap-6 sm:px-6 sm:py-6 ${
             mode === "slot"
               ? "sm:grid-cols-[minmax(320px,1fr)_minmax(0,1.25fr)] sm:divide-x sm:divide-[#F0E6F3]"
               : ""
@@ -380,7 +380,7 @@ export default function VenuePricingPage({
           )}
         </div>
 
-        <div className="border-t border-[#F0E6F3] px-6 py-4">
+        <div className="border-t border-[#F0E6F3] px-5 py-3 sm:px-6 sm:py-4">
           {finalPrice != null && (
             <>
               <div className="mb-3 flex items-center justify-between text-sm">
@@ -399,7 +399,7 @@ export default function VenuePricingPage({
                   {inr(totalPrice)}
                 </span>
               </div>
-              <div className="mb-4 flex items-center justify-between">
+              <div className="mb-3 flex items-center justify-between sm:mb-4">
                 <span className="text-sm font-medium text-neutral-700">
                   Quantity
                 </span>
@@ -461,7 +461,7 @@ export default function VenuePricingPage({
           <Button
             disabled={!canProceed || proceedLoading}
             onClick={handleProceed}
-            className="h-12 w-full rounded-xl bg-[#6E3482] text-[15px] font-semibold hover:bg-[#49225B] disabled:bg-[#F0E6F3] disabled:text-[#A293AA]"
+            className="h-11 w-full rounded-xl bg-[#6E3482] text-[15px] font-semibold hover:bg-[#49225B] disabled:bg-[#F0E6F3] disabled:text-[#A293AA] sm:h-12"
           >
             {proceedLoading ? "Creating booking..." : "Proceed"}
           </Button>
