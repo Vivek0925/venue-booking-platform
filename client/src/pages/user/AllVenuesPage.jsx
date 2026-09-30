@@ -28,7 +28,7 @@ function VenueCard({ venue }) {
           <img
             src={venue.cover_img_url}
             alt={venue.name}
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+            className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.02]"
           />
           <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-[#48245e] backdrop-blur">
             {toTitle(venue.category)}

@@ -62,8 +62,6 @@ function XIcon(props) {
   );
 }
 
-/* --------------------------------- header --------------------------------- */
-
 function SiteHeader({ location, onLocationChange }) {
   const [user, setUser] = useState(null);
 
@@ -127,15 +125,15 @@ function SiteHeader({ location, onLocationChange }) {
                 Choose your city
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {CITIES.map((c) => (
+              {CITIES.map((city) => (
                 <DropdownMenuItem
-                  key={c.city}
-                  onClick={() => onLocationChange(c)}
+                  key={city.city}
+                  onClick={() => onLocationChange(city)}
                   className="flex-col items-start gap-0"
                 >
-                  <span className="text-sm font-medium">{c.city}</span>
+                  <span className="text-sm font-medium">{city.city}</span>
                   <span className="text-xs text-muted-foreground">
-                    {c.state}
+                    {city.state}
                   </span>
                 </DropdownMenuItem>
               ))}
@@ -213,7 +211,6 @@ function SiteHeader({ location, onLocationChange }) {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Mobile city / nav */}
             <Sheet>
               <SheetTrigger asChild>
                 <Button
@@ -230,17 +227,19 @@ function SiteHeader({ location, onLocationChange }) {
                   Choose your city
                 </p>
                 <div className="space-y-1">
-                  {CITIES.map((c) => (
+                  {CITIES.map((city) => (
                     <button
-                      key={c.city}
-                      onClick={() => onLocationChange(c)}
+                      key={city.city}
+                      onClick={() => onLocationChange(city)}
                       className={`w-full rounded-md px-3 py-2 text-left text-sm hover:bg-muted ${
-                        c.city === location.city ? "bg-muted font-medium" : ""
+                        city.city === location.city
+                          ? "bg-muted font-medium"
+                          : ""
                       }`}
                     >
-                      {c.city}
+                      {city.city}
                       <span className="block text-xs text-muted-foreground">
-                        {c.state}
+                        {city.state}
                       </span>
                     </button>
                   ))}
@@ -254,66 +253,115 @@ function SiteHeader({ location, onLocationChange }) {
   );
 }
 
-/* --------------------------------- footer --------------------------------- */
-
 function SiteFooter() {
   return (
-    <footer className="w-full border-t border-neutral-800 bg-black text-neutral-100">
-      <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-[1fr_auto_1fr] md:items-center">
+    <footer className="w-full border-t border-[#35213d] bg-[#170d1d] text-white">
+      <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <a
             href="/"
             aria-label="Venuz home"
-            className="flex items-center justify-center gap-3 md:justify-self-start"
+            className="flex flex-col items-start gap-4"
           >
-            <img src={Logo} alt="Venuz" className="h-10 w-10" />
-            <span className="text-2xl font-bold tracking-tight text-white">
-              Venuez
+            <span className="flex items-center gap-3">
+              <img src={Logo} alt="Venuz" className="h-10 w-10" />
+              <span className="text-2xl font-bold tracking-tight">Venuez</span>
+            </span>
+            <span className="max-w-xs text-sm leading-6 text-white">
+              Discover and book memorable local experiences, all in one place.
             </span>
           </a>
 
-          <nav className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm font-medium">
-            {FOOTER_LINKS.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                className="text-neutral-300 transition hover:text-white"
-              >
-                {l.label}
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#bd6fc0]">
+              Explore
+            </p>
+            <nav className="flex flex-col items-start gap-3 text-sm">
+              <a href="/" className="text-white transition hover:text-white">
+                All venues
               </a>
-            ))}
-          </nav>
+              <a href="/" className="text-white transition hover:text-white">
+                Experiences
+              </a>
+              <a
+                href="/bookings"
+                className="text-white transition hover:text-white"
+              >
+                My bookings
+              </a>
+            </nav>
+          </div>
 
-          <div className="flex items-center justify-center gap-5 md:justify-self-end">
-            {[
-              { Icon: MessageCircle, label: "WhatsApp", href: "#" },
-              { Icon: Globe2, label: "Facebook", href: "#" },
-              { Icon: Camera, label: "Instagram", href: "#" },
-              { Icon: XIcon, label: "X", href: "#" },
-              { Icon: Play, label: "YouTube", href: "#" },
-            ].map(({ Icon, label, href }) => (
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#bd6fc0]">
+              For venues
+            </p>
+            <nav className="flex flex-col items-start gap-3 text-sm">
               <a
-                key={label}
-                href={href}
-                className="text-neutral-300 transition hover:text-white"
+                href="/partner-with-us"
+                className="text-white transition hover:text-white"
               >
-                <Icon className="h-5 w-5" />
+                List your venue
               </a>
-            ))}
+              <a
+                href="/vendor/apply"
+                className="text-white transition hover:text-white"
+              >
+                Become a partner
+              </a>
+              <a href="#" className="text-white transition hover:text-white">
+                Partner support
+              </a>
+            </nav>
+          </div>
+
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#bd6fc0]">
+              Connect
+            </p>
+            <div className="flex items-center gap-4">
+              {[
+                { Icon: MessageCircle, label: "WhatsApp", href: "#" },
+                { Icon: Globe2, label: "Facebook", href: "#" },
+                { Icon: Camera, label: "Instagram", href: "#" },
+                { Icon: XIcon, label: "X", href: "#" },
+                { Icon: Play, label: "YouTube", href: "#" },
+              ].map(({ Icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  aria-label={label}
+                  className="text-white transition hover:text-white"
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
-        <Separator className="my-8 bg-neutral-800" />
-        <p className="text-center text-xs leading-relaxed text-neutral-400">
-          By using this site you agree to our Terms of Service, Cookie Policy,
-          Privacy Policy and Content Guidelines. All rights reserved.
-        </p>
+        <Separator className="my-10 bg-[#35213d]" />
+        <div className="flex flex-col gap-4 text-xs text-white sm:flex-row sm:items-center sm:justify-between">
+          <p>© 2026 Venuz. Built for better days out.</p>
+          <nav className="flex flex-wrap gap-x-5 gap-y-2">
+            {FOOTER_LINKS.slice(0, 2).map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-white transition hover:text-white"
+              >
+                {link.label}
+              </a>
+            ))}
+            <a href="#" className="text-white transition hover:text-white">
+              Cookie policy
+            </a>
+          </nav>
+        </div>
       </div>
     </footer>
   );
 }
-
-/* ---------------------------------- shell --------------------------------- */
 
 export default function HomePage({ children }) {
   const [location, setLocation] = useState(CITIES[0]);
@@ -321,9 +369,7 @@ export default function HomePage({ children }) {
   return (
     <div className="flex min-h-screen flex-col bg-[#f6f5ff]">
       <SiteHeader location={location} onLocationChange={setLocation} />
-
       <main className="flex-1">{children}</main>
-
       <SiteFooter />
     </div>
   );

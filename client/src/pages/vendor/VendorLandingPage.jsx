@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { SiteFooter } from "@/pages/user/HomePage";
 import {
   Waves,
   Goal,
@@ -12,11 +13,6 @@ import {
   Flag,
   ArrowRight,
   Sparkles,
-  MessageCircle,
-  Globe2,
-  Camera,
-  X,
-  Play,
 } from "lucide-react";
 
 const VENUE_TYPES = [
@@ -236,69 +232,7 @@ export default function VendorLandingPage() {
         </Link>
       </section>
 
-      {/* Footer */}
-      <footer className="mt-auto w-full border-t border-neutral-800 bg-black text-neutral-100">
-        <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="grid gap-8 md:grid-cols-[1fr_auto_1fr] md:items-center">
-            <a
-              href="/"
-              aria-label="Venuz home"
-              className="flex items-center justify-center gap-3 md:justify-self-start"
-            >
-              <img src="/logo.svg" alt="Venuz" className="h-10 w-10" />
-              <span className="text-2xl font-bold tracking-tight text-white">
-                Venuez
-              </span>
-            </a>
-
-            <nav className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm font-medium">
-              <a
-                href="#"
-                className="text-neutral-300 transition hover:text-white"
-              >
-                Terms &amp; Conditions
-              </a>
-              <a
-                href="#"
-                className="text-neutral-300 transition hover:text-white"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-neutral-300 transition hover:text-white"
-              >
-                Contact us
-              </a>
-              <a
-                href="/partner-with-us"
-                className="text-neutral-300 transition hover:text-white"
-              >
-                List your venue
-              </a>
-            </nav>
-
-            <div className="flex items-center justify-center gap-5 md:justify-self-end">
-              {[MessageCircle, Globe2, Camera, X, Play].map((Icon, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  aria-label={`Social link ${index + 1}`}
-                  className="text-neutral-300 transition hover:text-white"
-                >
-                  <Icon className="h-5 w-5" />
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="my-8 border-t border-neutral-800" />
-          <p className="text-center text-xs leading-relaxed text-neutral-400">
-            By using this site you agree to our Terms of Service, Cookie Policy,
-            Privacy Policy and Content Guidelines. All rights reserved.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
