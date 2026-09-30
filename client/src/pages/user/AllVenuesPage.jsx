@@ -17,8 +17,11 @@ const formatPrice = (value) => {
   return `From ₹${Number(value).toLocaleString("en-IN")}`;
 };
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=85";
+const HERO_IMAGES = [
+  "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=85",
+  "https://images.unsplash.com/photo-1560089000-7433a4ebbd64?auto=format&fit=crop&w=1200&q=85",
+  "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=85",
+];
 
 function VenueCard({ venue }) {
   return (
@@ -90,6 +93,7 @@ export default function AllVenuesPage() {
   const [venues, setVenues] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [heroIndex, setHeroIndex] = useState(0);
 
   useEffect(() => {
     let isMounted = true;
@@ -109,6 +113,23 @@ export default function AllVenuesPage() {
       isMounted = false;
     };
   }, []);
+
+  const heroImages = [
+    ...new Set([
+      ...venues.map((venue) => venue.cover_img_url).filter(Boolean),
+      ...HERO_IMAGES,
+    ]),
+  ];
+
+  useEffect(() => {
+    if (heroImages.length < 2) return undefined;
+
+    const intervalId = setInterval(() => {
+      setHeroIndex((currentIndex) => (currentIndex + 1) % heroImages.length);
+    }, 4000);
+
+    return () => clearInterval(intervalId);
+  }, [heroImages.length]);
 
   return (
     <div className="overflow-hidden bg-[#fbf8fd] text-[#281b30]">
@@ -161,14 +182,29 @@ export default function AllVenuesPage() {
             ))}
           </div>
         </div>
-        {venues[0]?.cover_img_url || HERO_IMAGE ? (
+        {heroImages.length > 0 ? (
           <div className="relative mx-auto w-full max-w-[520px] lg:justify-self-end">
             <div className="absolute -inset-5 rounded-[35%] bg-[#f1dff4] blur-2xl" />
             <img
-              src={venues[0]?.cover_img_url || HERO_IMAGE}
+              src={heroImages[heroIndex % heroImages.length]}
               alt="Featured venue"
-              className="relative aspect-[1.15/0.82] w-full rounded-[28px] object-cover shadow-[0_20px_45px_rgba(77,35,93,0.18)]"
+              className="relative aspect-[1.15/0.82] w-full rounded-[28px] object-cover shadow-[0_20px_45px_rgba(77,35,93,0.18)] transition-opacity duration-700"
             />
+            <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full bg-black/20 px-2 py-1 backdrop-blur-sm">
+              {heroImages.map((image, index) => (
+                <button
+                  key={image}
+                  type="button"
+                  aria-label={`Show featured image ${index + 1}`}
+                  onClick={() => setHeroIndex(index)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    index === heroIndex % heroImages.length
+                      ? "w-5 bg-white"
+                      : "w-1.5 bg-white/60"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         ) : (
           <div className="aspect-[1.15/0.82] rounded-[28px] bg-[#f1dff4]" />
