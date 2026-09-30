@@ -24,7 +24,7 @@ function VenueCard({ venue }) {
   return (
     <Card className="group overflow-hidden rounded-2xl border-[#eee5f4] bg-white shadow-[0_8px_28px_rgba(65,32,87,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(65,32,87,0.12)]">
       <Link to={`/venues/${venue.id}`} className="block overflow-hidden">
-        <div className="relative aspect-[1.28/1] overflow-hidden bg-[#eee4f5]">
+        <div className="relative aspect-[1.45/1] overflow-hidden bg-[#eee4f5]">
           <img
             src={venue.cover_img_url}
             alt={venue.name}
@@ -197,7 +197,7 @@ export default function AllVenuesPage() {
         )}
 
         {!error && isLoading && (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {Array.from({ length: 6 }, (_, index) => (
               <VenueSkeleton key={index} />
             ))}
@@ -216,7 +216,7 @@ export default function AllVenuesPage() {
         )}
 
         {!error && !isLoading && venues.length > 0 && (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {venues.map((venue) => (
               <VenueCard key={venue.id} venue={venue} />
             ))}
@@ -249,8 +249,8 @@ export default function AllVenuesPage() {
         ) : null}
       </section>
 
-      <section className="border-y border-[#eadcf0] bg-[#fbf8fd]">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 py-9 sm:grid-cols-4 sm:px-6 lg:px-8">
+      <section className="bg-[#fbf8fd]">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 py-9 sm:grid-cols-4 sm:px-6 lg:px-8">
           {[
             ["Verified venues", "Trusted and reviewed"],
             ["Easy booking", "Quick and hassle-free"],
@@ -259,7 +259,7 @@ export default function AllVenuesPage() {
           ].map(([title, description]) => (
             <div
               key={title}
-              className="border-[#eadff0] sm:border-r sm:pr-5 last:border-0"
+              className="rounded-2xl border border-[#E7DBEF] bg-[#F5EBFA]/90 p-5 shadow-[0_6px_24px_rgba(73,34,91,0.05)]"
             >
               <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#f2ddf7] text-[#8d3ca7]">
                 <Check className="h-5 w-5" />

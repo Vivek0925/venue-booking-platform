@@ -145,14 +145,14 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#F8F7FF] flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl bg-white rounded-3xl shadow-[0_20px_50px_rgba(109,40,217,0.07)] border border-violet-100/50 overflow-hidden grid grid-cols-1 md:grid-cols-2">
+    <div className="flex min-h-screen w-full items-center justify-center bg-[#fbf8fd] p-4">
+      <div className="grid w-full max-w-4xl grid-cols-1 overflow-hidden rounded-3xl border border-[#E7DBEF] bg-[#fbf8fd] shadow-[0_20px_50px_rgba(73,34,91,0.08)] md:grid-cols-2">
         {/* Left Side: Form */}
         <div className="p-8 sm:p-12 flex flex-col justify-center">
-          <h1 className="text-3xl font-extrabold text-stone-900 tracking-tight mb-2">
+          <h1 className="mb-2 text-3xl font-extrabold tracking-tight text-[#49225B]">
             Book Your Fun
           </h1>
-          <p className="text-xs sm:text-sm text-stone-500 mb-6 leading-relaxed">
+          <p className="mb-6 text-xs leading-relaxed text-[#76667D] sm:text-sm">
             From water parks to play zones, find and book the perfect venue for
             your next adventure.
           </p>
@@ -178,7 +178,7 @@ export default function LoginForm() {
           >
             {/* Email Field with Change / Send OTP beside it */}
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-400 mb-2">
+              <label className="mb-2 block text-[11px] font-bold uppercase tracking-wider text-[#A56ABD]">
                 Email Address
               </label>
               <div className="flex gap-2">
@@ -189,13 +189,13 @@ export default function LoginForm() {
                   placeholder="hello@email.com"
                   disabled={submitting || step === "otp"}
                   required
-                  className="h-11 text-sm bg-stone-50/60 border-stone-200 focus-visible:ring-violet-400"
+                  className="h-11 border-[#D8C7DF] bg-[#fbf8fd] text-sm focus-visible:ring-[#A56ABD]"
                 />
                 {step === "email" ? (
                   <Button
                     type="submit"
                     disabled={submitting || !email}
-                    className="h-11 px-4 text-xs font-semibold bg-violet-100/80 text-violet-700 hover:bg-violet-200/90 shadow-none border border-violet-200/50 shrink-0"
+                    className="h-11 shrink-0 border border-[#D8C7DF] bg-[#F5EBFA] px-4 text-xs font-semibold text-[#6E3482] shadow-none hover:bg-[#E7DBEF]"
                   >
                     {submitting ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -214,7 +214,7 @@ export default function LoginForm() {
                       setSuccessMessage(null);
                       setOtpDigits(["", "", "", "", "", ""]);
                     }}
-                    className="h-11 px-3 text-xs text-stone-500 hover:text-stone-800 border border-stone-200 shrink-0"
+                    className="h-11 shrink-0 border border-[#D8C7DF] px-3 text-xs text-[#76667D] hover:text-[#49225B]"
                   >
                     Change
                   </Button>
@@ -224,7 +224,7 @@ export default function LoginForm() {
 
             {/* OTP Section with Resend OTP beside it */}
             <div>
-              <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-400 mb-2">
+              <label className="mb-2 block text-[11px] font-bold uppercase tracking-wider text-[#A56ABD]">
                 Enter 6-Digit OTP
               </label>
               <div className="flex items-center gap-2">
@@ -242,7 +242,7 @@ export default function LoginForm() {
                       onChange={(e) => handleOtpChange(index, e.target.value)}
                       onKeyDown={(e) => handleKeyDown(index, e)}
                       disabled={step !== "otp" || submitting}
-                      className="h-11 text-center text-base font-semibold bg-stone-50/60 border-stone-200 focus-visible:ring-violet-400 px-0"
+                      className="h-11 border-[#D8C7DF] bg-[#fbf8fd] px-0 text-center text-base font-semibold focus-visible:ring-[#A56ABD]"
                     />
                   ))}
                 </div>
@@ -253,7 +253,7 @@ export default function LoginForm() {
                     variant="outline"
                     onClick={handleResendOtp}
                     disabled={resending || submitting}
-                    className="h-11 px-3 text-xs font-medium text-violet-600 border-violet-200 hover:bg-violet-50 hover:text-violet-700 shrink-0"
+                    className="h-11 shrink-0 border-[#D8C7DF] px-3 text-xs font-medium text-[#6E3482] hover:bg-[#F5EBFA] hover:text-[#49225B]"
                   >
                     {resending ? (
                       <Loader2 className="w-4 h-4 animate-spin" />
@@ -269,7 +269,7 @@ export default function LoginForm() {
             <Button
               type="submit"
               disabled={submitting || (step === "otp" && otp.length < 6)}
-              className="w-full h-11 bg-linear-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white font-medium shadow-sm shadow-violet-500/30 transition-all text-sm rounded-xl mt-2"
+              className="mt-2 h-11 w-full rounded-xl bg-[#6E3482] text-sm font-medium text-white shadow-sm shadow-[#D8C7DF] transition-all hover:bg-[#49225B]"
             >
               {submitting ? (
                 <Loader2 className="w-4 h-4 animate-spin mr-2" />
@@ -280,7 +280,7 @@ export default function LoginForm() {
 
           {/* Social Divider */}
           <div className="mt-8 mb-6 relative flex items-center justify-center">
-            <span className="text-[11px] font-medium text-stone-400">
+            <span className="text-[11px] font-medium text-[#A56ABD]">
               Or Continue with
             </span>
           </div>
@@ -290,7 +290,7 @@ export default function LoginForm() {
             type="button"
             variant="outline"
             onClick={handleGoogleLogin}
-            className="w-full h-11 border-stone-200 hover:bg-stone-50 rounded-xl text-stone-700 text-xs font-medium gap-2.5"
+            className="h-11 w-full gap-2.5 rounded-xl border-[#D8C7DF] text-xs font-medium text-[#49225B] hover:bg-[#fbf8fd]"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path
@@ -315,19 +315,19 @@ export default function LoginForm() {
         </div>
 
         {/* Right Side: Pastel Brand Panel */}
-        <div className="relative hidden md:flex flex-col items-center justify-center p-12 text-center bg-linear-to-br from-[#EEF0FF] via-[#F3F0FE] to-[#EEF5FF] overflow-hidden">
-          <Sun className="absolute top-10 right-10 text-amber-300 w-6 h-6 stroke-1" />
-          <Waves className="absolute left-10 top-1/2 -translate-y-1/2 text-cyan-400 w-6 h-6 stroke-1.5" />
-          <PartyPopper className="absolute bottom-10 left-10 text-pink-400 w-6 h-6 stroke-1.5" />
+        <div className="relative hidden flex-col items-center justify-center overflow-hidden border-l border-[#E7DBEF] bg-[radial-gradient(circle_at_100%_0%,#5b0fe8_0%,transparent_48%),radial-gradient(circle_at_0%_100%,#17108d_0%,transparent_52%),linear-gradient(135deg,#b98df4_0%,#b8edf0_48%,#e6e8f5_100%)] p-12 text-center md:flex">
+          <Sun className="absolute right-10 top-10 h-6 w-6 text-[#C28BCF] stroke-1" />
+          <Waves className="absolute left-10 top-1/2 h-6 w-6 -translate-y-1/2 text-[#6E3482] stroke-1.5" />
+          <PartyPopper className="absolute bottom-10 left-10 h-6 w-6 text-[#A56ABD] stroke-1.5" />
 
-          <div className="w-14 h-14 rounded-full border-2 border-violet-300/80 bg-white/70 backdrop-blur-sm flex items-center justify-center shadow-sm mb-6 text-violet-600">
+          <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-full border-2 border-[#D8C7DF] bg-[#fbf8fd]/80 text-[#6E3482] shadow-sm backdrop-blur-sm">
             <Ticket className="w-6 h-6 rotate-[-15deg] stroke-[1.8]" />
           </div>
 
-          <h2 className="text-xl font-bold text-stone-900 tracking-tight mb-2">
+          <h2 className="mb-2 text-xl font-bold tracking-tight text-[#49225B]">
             Ready for Adventure?
           </h2>
-          <p className="text-xs text-stone-500 max-w-xs leading-relaxed mb-6">
+          <p className="mb-6 max-w-xs text-xs leading-relaxed text-[#76667D]">
             Access exclusive deals for top-rated venues, theme parks, and fun
             weekend getaways.
           </p>
@@ -342,7 +342,7 @@ export default function LoginForm() {
             <div className="w-7 h-7 rounded-full bg-sky-200 border-2 border-white flex items-center justify-center text-[10px] font-bold text-sky-900">
               RV
             </div>
-            <div className="w-7 h-7 rounded-full bg-violet-500 border-2 border-white flex items-center justify-center text-[9px] font-bold text-white shadow-xs">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-[#6E3482] text-[9px] font-bold text-white shadow-xs">
               +12k
             </div>
           </div>

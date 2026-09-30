@@ -133,7 +133,7 @@ export default function VendorLandingPage() {
       </section>
 
       {/* Stats */}
-      <section className="border-y border-[#E7DBEF] bg-[#fbf8fd] px-5 py-6 sm:px-8">
+      <section className="bg-[#fbf8fd] px-5 py-6 sm:px-8">
         <div className="mx-auto grid max-w-5xl grid-cols-2 gap-3 md:grid-cols-4">
           {STATS.map(([value, label]) => (
             <div
@@ -194,17 +194,24 @@ export default function VendorLandingPage() {
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
             {STEPS.map(({ n, title, desc }) => (
-              <div key={n} className="flex flex-col">
-                <span className="mb-3 font-mono text-4xl font-extrabold text-[#C28BCF]">
-                  {n}
-                </span>
-                <h3 className="mb-1.5 text-base font-semibold text-[#2B1D31]">
-                  {title}
-                </h3>
-                <p className="text-sm leading-relaxed text-[#76667D]">{desc}</p>
-              </div>
+              <Card
+                key={n}
+                className="border-[#E7DBEF] bg-[#F5EBFA]/90 shadow-[0_6px_24px_rgba(73,34,91,0.05)]"
+              >
+                <CardContent className="p-5">
+                  <span className="mb-3 block font-mono text-4xl font-extrabold text-[#C28BCF]">
+                    {n}
+                  </span>
+                  <h3 className="mb-1.5 text-base font-semibold text-[#2B1D31]">
+                    {title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-[#76667D]">
+                    {desc}
+                  </p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
