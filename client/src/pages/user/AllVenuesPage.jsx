@@ -22,13 +22,13 @@ const HERO_IMAGE =
 
 function VenueCard({ venue }) {
   return (
-    <Card className="group overflow-hidden rounded-2xl border-[#eee5f4] bg-white shadow-[0_8px_28px_rgba(65,32,87,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(65,32,87,0.12)]">
+    <Card className="group overflow-hidden rounded-2xl border-[#eee5f4] bg-white py-0 shadow-[0_8px_28px_rgba(65,32,87,0.06)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(65,32,87,0.12)]">
       <Link to={`/venues/${venue.id}`} className="block overflow-hidden">
         <div className="relative aspect-[1.45/1] overflow-hidden bg-[#eee4f5]">
           <img
             src={venue.cover_img_url}
             alt={venue.name}
-            className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.02]"
+            className="h-full w-full object-cover object-center transition duration-500 group-hover:scale-105"
           />
           <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-semibold text-[#48245e] backdrop-blur">
             {toTitle(venue.category)}
