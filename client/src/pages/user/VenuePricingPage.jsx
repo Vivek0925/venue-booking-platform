@@ -329,15 +329,15 @@ export default function VenuePricingPage({
 
       <DialogContent
         showCloseButton={false}
-        className={`gap-0 rounded-2xl p-0 ${
+        className={`gap-0 rounded-2xl border-[#E7DBEF] p-0 shadow-[0_16px_50px_rgba(73,34,91,0.16)] ${
           mode === "slot" ? "sm:max-w-4xl" : "sm:max-w-sm"
         }`}
       >
-        <div className="flex items-center justify-between border-b border-neutral-100 px-6 py-5">
-          <DialogTitle className="text-lg font-semibold text-neutral-900">
+        <div className="flex items-center justify-between border-b border-[#F0E6F3] px-6 py-5">
+          <DialogTitle className="text-lg font-bold tracking-[-0.02em] text-[#49225B]">
             When would you like to visit?
           </DialogTitle>
-          <DialogClose className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700">
+          <DialogClose className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-[#8B7A91] hover:bg-[#F5EBFA] hover:text-[#49225B]">
             <X className="h-4 w-4" />
           </DialogClose>
         </div>
@@ -345,7 +345,7 @@ export default function VenuePricingPage({
         <div
           className={`grid gap-6 px-6 py-6 ${
             mode === "slot"
-              ? "sm:grid-cols-[minmax(320px,1fr)_minmax(0,1.25fr)] sm:divide-x sm:divide-neutral-100"
+              ? "sm:grid-cols-[minmax(320px,1fr)_minmax(0,1.25fr)] sm:divide-x sm:divide-[#F0E6F3]"
               : ""
           }`}
         >
@@ -380,7 +380,7 @@ export default function VenuePricingPage({
           )}
         </div>
 
-        <div className="border-t border-neutral-100 px-6 py-4">
+        <div className="border-t border-[#F0E6F3] px-6 py-4">
           {finalPrice != null && (
             <>
               <div className="mb-3 flex items-center justify-between text-sm">
@@ -461,7 +461,7 @@ export default function VenuePricingPage({
           <Button
             disabled={!canProceed || proceedLoading}
             onClick={handleProceed}
-            className="h-12 w-full rounded-xl bg-neutral-900 text-[15px] hover:bg-neutral-800 disabled:bg-neutral-100 disabled:text-neutral-400"
+            className="h-12 w-full rounded-xl bg-[#6E3482] text-[15px] font-semibold hover:bg-[#49225B] disabled:bg-[#F0E6F3] disabled:text-[#A293AA]"
           >
             {proceedLoading ? "Creating booking..." : "Proceed"}
           </Button>

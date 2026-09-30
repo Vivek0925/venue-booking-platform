@@ -25,7 +25,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { getMe, logout } from "@/api/user.api";
 import Logo from "@/assets/logo.svg";
 
@@ -64,6 +69,7 @@ function XIcon(props) {
 
 function SiteHeader({ location, onLocationChange }) {
   const [user, setUser] = useState(null);
+  const [showCities, setShowCities] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -216,33 +222,85 @@ function SiteHeader({ location, onLocationChange }) {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="sm:hidden"
+                  className="h-9 w-9 rounded-full text-[#6E3482] hover:bg-[#f4e8f8] lg:hidden"
                   aria-label="Menu"
                 >
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-72">
-                <p className="mb-3 mt-6 text-sm font-medium">
-                  Choose your city
-                </p>
-                <div className="space-y-1">
-                  {CITIES.map((city) => (
-                    <button
-                      key={city.city}
-                      onClick={() => onLocationChange(city)}
-                      className={`w-full rounded-md px-3 py-2 text-left text-sm hover:bg-muted ${
-                        city.city === location.city
-                          ? "bg-muted font-medium"
-                          : ""
-                      }`}
+              <SheetContent
+                side="right"
+                className="w-[min(20rem,calc(100vw-1rem))] rounded-l-2xl border-[#e7dbef] bg-[#fbf8fd] px-5 py-6"
+              >
+                <nav className="mt-7 flex flex-col border-b border-[#eee5f2] pb-5">
+                  {[
+                    { label: "Explore", href: "/" },
+                    { label: "Events", href: "/" },
+                    { label: "Weddings", href: "/" },
+                    { label: "Sports", href: "/" },
+                    { label: "Restaurants", href: "/" },
+                    { label: "List your venue", href: "/partner-with-us" },
+                  ].map((item) => (
+                    <a
+                      key={item.label}
+                      href={item.href}
+                      className="rounded-lg px-3 py-2.5 text-[15px] font-semibold text-[#49225B] transition hover:bg-[#f4e8f8]"
                     >
-                      {city.city}
-                      <span className="block text-xs text-muted-foreground">
-                        {city.state}
-                      </span>
-                    </button>
+                      {item.label}
+                    </a>
                   ))}
+                </nav>
+
+                <div className="mt-5">
+                  <button
+                    type="button"
+                    aria-expanded={showCities}
+                    onClick={() => setShowCities((open) => !open)}
+                    className="flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left transition hover:bg-[#f4e8f8]"
+                  >
+                    <span>
+                      <span className="block text-[11px] font-medium uppercase tracking-[0.12em] text-[#8b7c91]">
+                        Location
+                      </span>
+                      <span className="mt-1 block text-sm font-semibold text-[#49225B]">
+                        {location.city}
+                        <span className="ml-1 font-normal text-[#8b7c91]">
+                          {location.state}
+                        </span>
+                      </span>
+                    </span>
+                    <ChevronDown
+                      className={`h-4 w-4 text-[#6E3482] transition-transform ${
+                        showCities ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  {showCities && (
+                    <div className="mt-2 space-y-1 border-t border-[#eee5f2] pt-2">
+                      {CITIES.filter((city) => city.city !== location.city).map(
+                        (city) => (
+                          <SheetClose asChild key={city.city}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                onLocationChange(city);
+                                setShowCities(false);
+                              }}
+                              className="w-full rounded-lg px-3 py-2.5 text-left text-sm text-[#6E3482] transition hover:bg-[#f4e8f8]"
+                            >
+                              <span className="block font-medium">
+                                {city.city}
+                              </span>
+                              <span className="block text-xs text-[#8b7c91]">
+                                {city.state}
+                              </span>
+                            </button>
+                          </SheetClose>
+                        ),
+                      )}
+                    </div>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>

@@ -73,7 +73,7 @@ function HeroGallery({ images = [], name }) {
   const extra = Math.max(images.length - 5, 0);
 
   const tile =
-    "group relative overflow-hidden bg-neutral-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500";
+    "group relative overflow-hidden bg-[#E7DBEF] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A56ABD]";
   const img =
     "h-full w-full object-cover transition-transform duration-700 group-hover:scale-105";
 
@@ -111,7 +111,7 @@ function HeroGallery({ images = [], name }) {
           <button
             aria-label="View all photos"
             onClick={() => setActive(0)}
-            className="absolute right-3 top-1/2 hidden h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-white shadow-lg ring-1 ring-black/5 transition hover:scale-105 sm:grid"
+            className="absolute right-3 top-1/2 hidden h-9 w-9 -translate-y-1/2 place-items-center rounded-full bg-white shadow-[0_6px_20px_rgba(73,34,91,0.12)] ring-1 ring-[#E7DBEF] transition hover:scale-105 sm:grid"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
@@ -127,7 +127,7 @@ function HeroGallery({ images = [], name }) {
             <img
               src={images[active]}
               alt=""
-              className="aspect-16/10 max-h-[75vh] w-full rounded-xl bg-neutral-100 object-contain"
+              className="aspect-16/10 max-h-[75vh] w-full rounded-xl bg-[#F5EBFA] object-contain"
             />
             {images.length > 1 && (
               <>
@@ -163,7 +163,7 @@ function HeroGallery({ images = [], name }) {
                 onClick={() => setActive(i)}
                 className={`h-16 w-24 shrink-0 overflow-hidden rounded-lg ring-2 transition ${
                   i === active
-                    ? "ring-violet-600"
+                    ? "ring-[#6E3482]"
                     : "opacity-60 ring-transparent hover:opacity-100"
                 }`}
               >
@@ -427,15 +427,15 @@ export default function VenueBookingPage({ onBook }) {
   };
 
   return (
-    <div className="pb-24 lg:pb-12">
+    <div className="min-h-screen bg-[#fbf8fd] pb-24 lg:pb-12">
       <div className="mx-auto max-w-7xl px-4 pt-8">
         {/* Title */}
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h1 className="text-[26px] font-semibold tracking-tight text-neutral-900 sm:text-[32px]">
+            <h1 className="text-[26px] font-bold tracking-[-0.04em] text-[#49225B] sm:text-[32px]">
               {name}
             </h1>
-            <p className="mt-1 text-[15px] font-medium text-violet-600">
+            <p className="mt-1 text-[15px] font-semibold text-[#A56ABD]">
               Open daily, {access.toLowerCase()}
             </p>
           </div>
@@ -454,7 +454,7 @@ export default function VenueBookingPage({ onBook }) {
               variant="ghost"
               size="icon"
               aria-label="Share venue"
-              className="rounded-full text-neutral-500"
+              className="rounded-full text-[#6E3482] hover:bg-[#F5EBFA]"
               onClick={handleShare}
             >
               <Share2 className="h-4.5 w-4.5" />
@@ -471,12 +471,12 @@ export default function VenueBookingPage({ onBook }) {
           <div className="space-y-12">
             {/* About */}
             <section>
-              <h2 className="text-xl font-semibold text-neutral-900">
+              <h2 className="text-xl font-bold tracking-[-0.03em] text-[#49225B]">
                 About the venue
               </h2>
 
               <p
-                className={`mt-5 max-w-[66ch] text-[15px] leading-7 text-neutral-600 ${
+                className={`mt-5 max-w-[66ch] text-[15px] leading-7 text-[#76667D] ${
                   expanded ? "" : "line-clamp-3"
                 }`}
               >
@@ -484,7 +484,7 @@ export default function VenueBookingPage({ onBook }) {
               </p>
               <button
                 onClick={() => setExpanded((v) => !v)}
-                className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-neutral-900"
+                className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-[#6E3482]"
               >
                 {expanded ? "Read less" : "Read more"}
                 <ChevronDown
@@ -497,7 +497,7 @@ export default function VenueBookingPage({ onBook }) {
 
             {/* Things to know */}
             <section>
-              <h2 className="text-xl font-semibold text-neutral-900">
+              <h2 className="text-xl font-bold tracking-[-0.03em] text-[#49225B]">
                 Things to know
               </h2>
               <div className="mt-4 grid gap-x-10 sm:grid-cols-2">
@@ -513,39 +513,41 @@ export default function VenueBookingPage({ onBook }) {
 
             {/* More */}
             <section>
-              <h2 className="text-xl font-semibold text-neutral-900">More</h2>
-              <a className="mt-4 flex items-center gap-3 rounded-xl bg-white px-4 py-4 shadow-[0_1px_2px_rgba(16,12,40,.06)] ring-1 ring-black/5 transition hover:shadow-md">
-                <FileText className="h-4.5 w-4.5 text-neutral-500" />
-                <span className="flex-1 text-[15px] font-medium">
+              <h2 className="text-xl font-bold tracking-[-0.03em] text-[#49225B]">
+                More
+              </h2>
+              <a className="mt-4 flex items-center gap-3 rounded-xl border border-[#E7DBEF] bg-white px-4 py-4 shadow-[0_6px_24px_rgba(73,34,91,0.05)] transition hover:shadow-[0_12px_30px_rgba(73,34,91,0.08)]">
+                <FileText className="h-4.5 w-4.5 text-[#6E3482]" />
+                <span className="flex-1 text-[15px] font-medium text-[#33243B]">
                   Terms and conditions
                 </span>
-                <ChevronRight className="h-4 w-4 text-neutral-400" />
+                <ChevronRight className="h-4 w-4 text-[#A293AA]" />
               </a>
             </section>
           </div>
 
           {/* Sticky rail */}
           <aside className="hidden lg:sticky lg:top-24 lg:block lg:space-y-3">
-            <div className="overflow-hidden rounded-2xl bg-white shadow-[0_2px_10px_rgba(16,12,40,.06)] ring-1 ring-black/5">
+            <div className="overflow-hidden rounded-2xl border border-[#E7DBEF] bg-white shadow-[0_6px_24px_rgba(73,34,91,0.06)]">
               <div className="flex items-center justify-between gap-4 p-4">
                 <div>
-                  <p className="text-[13px] text-neutral-500">From</p>
-                  <p className="text-[22px] font-semibold leading-tight text-neutral-900">
+                  <p className="text-[13px] text-[#8B7A91]">From</p>
+                  <p className="text-[22px] font-bold leading-tight text-[#49225B]">
                     {inr(startingPrice)}
                   </p>
-                  <p className="text-[12px] text-neutral-400">(Inc. taxes)</p>
+                  <p className="text-[12px] text-[#A293AA]">(Inc. taxes)</p>
                 </div>
                 <Button
                   onClick={handleBook}
                   disabled={pricingLoading}
-                  className="h-11 rounded-xl bg-neutral-900 px-6 text-[15px] hover:bg-neutral-800"
+                  className="h-11 rounded-xl bg-[#6E3482] px-6 text-[15px] font-semibold hover:bg-[#49225B]"
                 >
                   Book tickets
                 </Button>
               </div>
             </div>
 
-            <div className="divide-y divide-neutral-100 overflow-hidden rounded-2xl bg-white shadow-[0_2px_10px_rgba(16,12,40,.06)] ring-1 ring-black/5">
+            <div className="divide-y divide-[#F0E6F3] overflow-hidden rounded-2xl border border-[#E7DBEF] bg-white shadow-[0_6px_24px_rgba(73,34,91,0.05)]">
               <InfoRow
                 icon={MapPin}
                 title={`${name}, ${district}`}
@@ -566,17 +568,17 @@ export default function VenueBookingPage({ onBook }) {
       {/* Mobile bar */}
       <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-4 border-t border-neutral-200 bg-white px-4 py-3 lg:hidden">
         <div>
-          <p className="text-[18px] font-semibold leading-none text-neutral-900">
+          <p className="text-[18px] font-bold leading-none text-[#49225B]">
             {inr(startingPrice)}
           </p>
-          <p className="mt-1 text-[12px] text-neutral-500">
+          <p className="mt-1 text-[12px] text-[#76667D]">
             Inc. taxes · {hours}
           </p>
         </div>
         <Button
           onClick={handleBook}
           disabled={pricingLoading}
-          className="h-11 rounded-xl bg-neutral-900 px-7 hover:bg-neutral-800"
+          className="h-11 rounded-xl bg-[#6E3482] px-7 font-semibold hover:bg-[#49225B]"
         >
           Book tickets
         </Button>
