@@ -44,12 +44,12 @@ const STATES = [
 function Field({ label, error, children, className = "" }) {
   return (
     <div className={`flex flex-col gap-1.5 ${className}`}>
-      <label className="text-[10px] font-bold uppercase tracking-wider text-stone-500">
+      <label className="text-[10px] font-bold uppercase tracking-wider text-[#8b7c91]">
         {label}
       </label>
       {children}
       {error && (
-        <p className="text-[11px] text-red-500 font-medium tracking-tight">
+        <p className="text-[11px] font-medium tracking-tight text-red-500">
           {error.message}
         </p>
       )}
@@ -166,31 +166,31 @@ export default function VendorApplicationForm({ previousApplication }) {
   };
 
   const inp = (err) =>
-    `w-full rounded-xl border px-3.5 py-2.5 text-xs text-stone-800 placeholder:text-stone-400 bg-stone-50/50 outline-none transition-all duration-150 ${
+    `w-full rounded-xl border px-3.5 py-2.5 text-xs text-[#33243b] placeholder:text-[#a293aa] bg-[#fbf8fd] outline-none transition-all duration-150 ${
       err
         ? "border-red-400 bg-red-50/50 focus:border-red-500 focus:ring-2 focus:ring-red-100"
-        : "border-stone-200 hover:border-stone-300 focus:border-violet-400 focus:bg-white focus:ring-2 focus:ring-violet-100"
+        : "border-[#e7dbef] hover:border-[#d8c7df] focus:border-[#6e3482] focus:bg-white focus:ring-2 focus:ring-[#f0e2ff]"
     }`;
 
   return (
-    <div className="fixed inset-0 bg-[#F8F7FF] flex overflow-hidden">
-      <div className="hidden lg:flex flex-col justify-between w-180 shrink-0 bg-linear-to-b from-[#3d1a8e] to-[#5b21b6] text-white p-10 relative overflow-hidden border-r border-violet-800/40">
+    <div className="fixed inset-0 flex overflow-hidden bg-[#fbf8fd]">
+      <div className="relative hidden w-180 shrink-0 flex-col justify-between overflow-hidden border-r border-[#6e3482] bg-[#49225B] p-10 text-white lg:flex">
         <div
           className="absolute inset-0 opacity-30"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 20px 20px, rgba(167,139,250,.35) 1px, transparent 0)",
+              "radial-gradient(circle at 20px 20px, rgba(245,235,250,.22) 1px, transparent 0)",
             backgroundSize: "40px 40px",
           }}
         />
-        <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-400 rounded-full opacity-20 translate-x-20 translate-y-20" />
-        <div className="absolute top-0 left-0 w-40 h-40 bg-violet-300 rounded-full opacity-15 -translate-x-10 -translate-y-10" />
+        <div className="absolute bottom-0 right-0 h-64 w-64 translate-x-20 translate-y-20 rounded-full bg-[#A56ABD] opacity-20" />
+        <div className="absolute left-0 top-0 h-40 w-40 -translate-x-10 -translate-y-10 rounded-full bg-[#A56ABD] opacity-15" />
 
         <div className="relative z-10">
           <div className="mb-8 inline-block rounded-lg bg-white px-2 py-2">
             <img src="/logo.svg" alt="Venuez logo" className="h-10 w-auto" />
           </div>
-          <span className="inline-flex rounded-full border border-violet-300/40 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-violet-200">
+          <span className="inline-flex rounded-full border border-[#A56ABD]/50 bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-[#e7dbef]">
             Partner onboarding
           </span>
           <h1 className="mt-4 text-4xl font-black uppercase italic leading-tight tracking-tight text-white">
@@ -198,7 +198,7 @@ export default function VendorApplicationForm({ previousApplication }) {
             <br />
             with Us
           </h1>
-          <p className="text-sm text-violet-200 mt-3 leading-relaxed max-w-sm">
+          <p className="mt-3 max-w-sm text-sm leading-relaxed text-[#e7dbef]">
             Join our growing network of verified venues and unlock a new stream
             of customers.
           </p>
@@ -220,35 +220,35 @@ export default function VendorApplicationForm({ previousApplication }) {
           ].map((step) => (
             <div
               key={step.num}
-              className="flex items-start gap-4 rounded-xl border border-violet-400/30 bg-white/10 px-3 py-2"
+              className="flex items-start gap-4 rounded-xl border border-[#A56ABD]/35 bg-white/10 px-3 py-2"
             >
-              <span className="text-violet-300 font-black text-xs mt-0.5 shrink-0">
+              <span className="mt-0.5 shrink-0 text-xs font-black text-[#d8b9e2]">
                 {step.num}
               </span>
               <div>
                 <p className="text-xs font-bold text-white">{step.title}</p>
-                <p className="text-[11px] text-violet-200">{step.desc}</p>
+                <p className="text-[11px] text-[#e7dbef]">{step.desc}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <p className="relative z-10 text-[10px] text-violet-300/70 uppercase tracking-widest">
+        <p className="relative z-10 text-[10px] uppercase tracking-widest text-[#d8b9e2]/70">
           © 2025 Venuz · Built for local venues
         </p>
       </div>
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex-1 overflow-auto px-4 py-8 sm:px-10 lg:px-12 flex justify-center items-start">
-          <div className="w-full max-w-4xl rounded-3xl border border-stone-200/80 bg-white p-6 shadow-[0_20px_50px_rgba(109,40,217,0.06)] sm:p-9">
-            <header className="mb-6 border-b border-stone-100 pb-5">
-              <span className="inline-block text-[10px] font-bold uppercase tracking-widest text-violet-700 bg-violet-100/70 border border-violet-200/60 px-3 py-1 rounded-full mb-3">
+          <div className="w-full max-w-4xl rounded-3xl border border-[#e7dbef] bg-white p-6 shadow-[0_12px_40px_rgba(73,34,91,0.07)] sm:p-9">
+            <header className="mb-6 border-b border-[#f0e6f3] pb-5">
+              <span className="mb-3 inline-block rounded-full border border-[#d8c7df] bg-[#f0e2ff] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#6e3482]">
                 Partner Onboarding
               </span>
-              <h2 className="text-2xl font-black uppercase tracking-tight text-stone-900">
+              <h2 className="text-2xl font-bold uppercase tracking-[-0.03em] text-[#49225B]">
                 Vendor KYC Verification
               </h2>
-              <p className="text-xs sm:text-sm text-stone-500 mt-1 font-medium">
+              <p className="mt-1 text-xs font-medium text-[#76667D] sm:text-sm">
                 Fill in your details and upload your PAN document to continue.
               </p>
             </header>
@@ -256,17 +256,17 @@ export default function VendorApplicationForm({ previousApplication }) {
             <form onSubmit={handleSubmit(onSubmit)}>
               <fieldset disabled={loading} className="space-y-4">
                 {previousApplication?.rejectionReason && (
-                  <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700 mb-1">
+                  <div className="rounded-xl border border-[#f2dca7] bg-[#fff9e8] p-4">
+                    <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#9a6b16]">
                       Reason for Rejection
                     </p>
-                    <p className="text-sm text-amber-800 leading-relaxed">
+                    <p className="text-sm leading-relaxed text-[#785313]">
                       {previousApplication.rejectionReason}
                     </p>
                   </div>
                 )}
                 {submitError && (
-                  <div className="p-3.5 bg-red-50 border border-red-200 text-red-600 text-xs rounded-xl flex items-center gap-2.5 font-medium">
+                  <div className="flex items-center gap-2.5 rounded-xl border border-red-200 bg-red-50 p-3.5 text-xs font-medium text-red-600">
                     <TriangleAlert className="w-4 h-4 shrink-0 text-red-500" />
                     <span>{submitError}</span>
                   </div>
@@ -372,50 +372,50 @@ export default function VendorApplicationForm({ previousApplication }) {
                       }}
                       onDragLeave={() => setIsDragging(false)}
                       onDrop={handleDrop}
-                      className={`group min-h-40 rounded-2xl border-2 border-dashed px-5 py-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
+                      className={`group flex min-h-40 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed px-5 py-6 text-center transition-all ${
                         fileError
                           ? "border-red-400 bg-red-50/50"
                           : isDragging
-                            ? "border-violet-500 bg-violet-50 scale-[1.01]"
-                            : "border-stone-300 bg-stone-50/70 hover:border-violet-400 hover:bg-violet-50/40"
+                            ? "scale-[1.01] border-[#6e3482] bg-[#f0e2ff]"
+                            : "border-[#d8c7df] bg-[#fbf8fd] hover:border-[#6e3482] hover:bg-[#f5ebfa]"
                       }`}
                     >
-                      <span className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-white border border-stone-200 text-violet-600 shadow-sm transition-transform group-hover:-translate-y-0.5">
+                      <span className="mb-3 flex h-11 w-11 items-center justify-center rounded-full border border-[#e7dbef] bg-white text-[#6e3482] shadow-sm transition-transform group-hover:-translate-y-0.5">
                         <UploadCloud className="h-5 w-5" />
                       </span>
-                      <span className="text-sm font-bold text-stone-800">
+                      <span className="text-sm font-bold text-[#33243b]">
                         Drop your PAN document here
                       </span>
-                      <span className="mt-1 text-xs text-stone-500">
+                      <span className="mt-1 text-xs text-[#76667D]">
                         or{" "}
-                        <span className="font-semibold text-violet-700">
+                        <span className="font-semibold text-[#6e3482]">
                           browse files
                         </span>{" "}
                         from your device
                       </span>
-                      <span className="mt-3 rounded-full bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-stone-400 border border-stone-200">
+                      <span className="mt-3 rounded-full border border-[#e7dbef] bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#a293aa]">
                         JPG or PNG · max 5MB
                       </span>
                     </div>
                   ) : (
-                    <div className="min-h-24 border border-violet-200 rounded-2xl bg-violet-50/50 px-4 py-3 flex items-center justify-between">
+                    <div className="flex min-h-24 items-center justify-between rounded-2xl border border-[#d8c7df] bg-[#f5ebfa] px-4 py-3">
                       <div className="flex items-center gap-3 truncate">
                         {filePreview ? (
                           <img
                             src={filePreview}
                             alt="PAN Preview"
-                            className="w-16 h-16 object-cover rounded-lg border border-violet-200 shrink-0"
+                            className="h-16 w-16 shrink-0 rounded-lg border border-[#d8c7df] object-cover"
                           />
                         ) : (
-                          <span className="flex h-16 w-16 items-center justify-center rounded-lg bg-white border border-violet-200 shrink-0">
-                            <FileText className="w-6 h-6 text-violet-600" />
+                          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border border-[#d8c7df] bg-white">
+                            <FileText className="h-6 w-6 text-[#6e3482]" />
                           </span>
                         )}
                         <div className="min-w-0">
-                          <p className="text-xs font-bold text-stone-800 truncate">
+                          <p className="truncate text-xs font-bold text-[#33243b]">
                             {file.name}
                           </p>
-                          <p className="mt-1 text-[11px] text-stone-500">
+                          <p className="mt-1 text-[11px] text-[#76667D]">
                             {(file.size / 1024 / 1024).toFixed(2)} MB · Ready to
                             upload
                           </p>
@@ -424,7 +424,7 @@ export default function VendorApplicationForm({ previousApplication }) {
                       <button
                         type="button"
                         onClick={handleRemoveFile}
-                        className="p-1 rounded-md text-stone-400 hover:text-stone-700 hover:bg-stone-200/50 transition-colors"
+                        className="rounded-md p-1 text-[#a293aa] transition-colors hover:bg-[#e7dbef] hover:text-[#49225B]"
                         aria-label="Remove uploaded file"
                       >
                         <X className="w-4 h-4" />
@@ -443,7 +443,7 @@ export default function VendorApplicationForm({ previousApplication }) {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full h-11 bg-linear-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 active:scale-[0.99] text-white font-semibold text-xs tracking-wide shadow-sm shadow-violet-500/30 rounded-xl uppercase transition-all flex items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                    className="flex h-11 w-full items-center justify-center rounded-xl bg-[#6e3482] text-xs font-semibold uppercase tracking-wide text-white shadow-sm shadow-[#6e3482]/30 transition-all hover:bg-[#49225B] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
                   >
                     {loading ? (
                       <>
